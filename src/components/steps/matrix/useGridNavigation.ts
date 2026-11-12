@@ -13,6 +13,7 @@ export interface GridNavigationOptions {
   onOpen3d: (target: CellTarget) => void;
   onOpenSheet: (target: CellTarget) => void;
   onEscape: () => void;
+  onMoveSheet?: (target: CellTarget, delta: -1 | 1) => void;
 }
 
 function cellsOf(root: HTMLElement): HTMLElement[] {
@@ -41,7 +42,7 @@ function verticalNeighbour(cells: HTMLElement[], from: HTMLElement, down: boolea
 }
 
 export function useGridNavigation(rootRef: RefObject<HTMLElement | null>, options: GridNavigationOptions) {
-  const { onSelect, onOpen3d, onOpenSheet, onEscape } = options;
+  const { onSelect, onOpen3d, onOpenSheet, onEscape, onMoveSheet } = options;
 
   const moveTo = useCallback((cell: HTMLElement | null | undefined): void => {
     if (!cell) return;
@@ -56,9 +57,15 @@ export function useGridNavigation(rootRef: RefObject<HTMLElement | null>, option
     (event: KeyboardEvent<HTMLElement>): void => {
       const root = rootRef.current;
       const current = (event.target as HTMLElement).closest<HTMLElement>('[data-cell]');
-      if (!root || !current || event.altKey || event.ctrlKey || event.metaKey) return;
+      if (!root || !current || event.ctrlKey || event.metaKey) return;
       const target = targetOf(current);
       if (!target) return;
+      if (event.altKey) {
+        if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+        event.preventDefault();
+        onMoveSheet?.(target, event.key === 'ArrowUp' ? -1 : 1);
+        return;
+      }
       const cells = cellsOf(root);
       const index = cells.indexOf(current);
 
@@ -101,6 +108,6 @@ export function useGridNavigation(rootRef: RefObject<HTMLElement | null>, option
       }
       event.preventDefault();
     },
-    [rootRef, moveTo, onSelect, onOpen3d, onOpenSheet, onEscape],
+    [rootRef, moveTo, onSelect, onOpen3d, onOpenSheet, onEscape, onMoveSheet],
   );
 }

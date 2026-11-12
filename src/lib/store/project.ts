@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { planRestore } from '@/lib/cloud';
 import type { ProjectSnapshot } from '@/lib/cloud';
 
-import { buildPages, createManualBlank, DEFAULT_CONFIG, spreadIndexOfPage } from '@/lib/imposition';
+import { applyPadding, buildPages, createManualBlank, DEFAULT_CONFIG, reorderSheets, spreadIndexOfPage } from '@/lib/imposition';
 import { ingestFiles, naturalCompare, releaseAll, releaseAsset } from '@/lib/ingest';
 import type { IngestProgress, RejectedFile } from '@/lib/ingest';
 import type {
@@ -77,6 +77,7 @@ export interface ProjectState {
   dismissIngestMessages: () => void;
 
   movePage: (fromIndex: number, toIndex: number) => void;
+  moveSheet: (fromSheet: number, toSheet: number) => boolean;
   swapPages: (indexA: number, indexB: number) => void;
   insertBlank: (atIndex: number) => void;
   removePage: (pageId: string) => void;
@@ -111,6 +112,19 @@ function messageOf(error: unknown): string {
 
 function renumber(units: SourceUnit[]): SourceUnit[] {
   return units.map((unit, order) => (unit.order === order ? unit : { ...unit, order }));
+}
+
+function paddingShape(pages: readonly Page[]): string[] {
+  return pages.map((page) => (page.origin === 'auto-blank' ? '' : page.id));
+}
+
+function sameShape(a: readonly string[], b: readonly string[]): boolean {
+  return a.length === b.length && a.every((value, index) => value === b[index]);
+}
+
+function compactPages(effective: Page[], config: MagazineConfig): Page[] {
+  const supplied = effective.filter((page) => page.origin !== 'auto-blank');
+  return sameShape(paddingShape(applyPadding(supplied, config)), paddingShape(effective)) ? supplied : effective;
 }
 
 function clamp(value: number, min: number, max: number): number {
@@ -373,6 +387,16 @@ export const useProjectStore = create<ProjectState>()((set, get) => {
         pages.splice(to, 0, moved);
         return { pages, pagesEdited: true };
       });
+    },
+
+    moveSheet: (fromSheet, toSheet) => {
+      const state = get();
+      if (state.pages.length === 0 || isPrinterSpreads(state.config)) return false;
+      const { effectivePages, imposition } = selectDerived(state);
+      const reordered = reorderSheets(effectivePages, imposition, fromSheet, toSheet);
+      if (!reordered) return false;
+      set({ pages: compactPages(reordered, state.config), pagesEdited: true });
+      return true;
     },
 
     swapPages: (indexA, indexB) => {

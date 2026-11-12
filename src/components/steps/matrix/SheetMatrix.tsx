@@ -1,5 +1,5 @@
-import { Layers, Wrench } from 'lucide-react';
-import { memo, type CSSProperties } from 'react';
+import { GripVertical, Layers, Wrench } from 'lucide-react';
+import { memo, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
 
 import { countText, SEVERITY_LABEL, sheetNumeral, sheetRoleText } from '@/components/report/labels';
 import { Button, Icon, Tag, TONE_ICON, toast, Tooltip } from '@/components/ui';
@@ -13,6 +13,7 @@ import { readingPartner } from './matrixModel';
 import { useMatrixUi } from './matrixUi';
 import { PageSlot } from './PageSlot';
 import styles from './SheetMatrix.module.css';
+import type { SheetReorder } from './useSheetReorder';
 
 export interface SheetMatrixProps {
   blocks: readonly SignatureBlockModel[];
@@ -21,11 +22,34 @@ export interface SheetMatrixProps {
   onSelect: (slot: SlotModel) => void;
   onOpen3d: (page: number) => void;
   onOpenSheet: (sheetIndex: number, face: SheetFace) => void;
+  reorder: SheetReorder | null;
 }
 
-export const SheetMatrix = memo(function SheetMatrix({ blocks, pageCount, visibleSheets, onSelect, onOpen3d, onOpenSheet }: SheetMatrixProps) {
+interface RowDrag {
+  lifted: boolean;
+  shifted: boolean;
+  targetNumber: number | null;
+  targetPages: string | null;
+}
+
+const IDLE_DRAG: RowDrag = { lifted: false, shifted: false, targetNumber: null, targetPages: null };
+
+function rowDragOf(reorder: SheetReorder | null, index: number): RowDrag {
+  const drag = reorder?.drag;
+  if (!reorder || !drag) return IDLE_DRAG;
+  if (drag.from === index) {
+    const moving = drag.target !== drag.from;
+    return { lifted: true, shifted: false, targetNumber: moving ? drag.target + 1 : null, targetPages: moving ? reorder.targetPages(drag.target) : null };
+  }
+  const low = Math.min(drag.from, drag.target);
+  const high = Math.max(drag.from, drag.target);
+  return index >= low && index <= high ? { ...IDLE_DRAG, shifted: true } : IDLE_DRAG;
+}
+
+export const SheetMatrix = memo(function SheetMatrix({ blocks, pageCount, visibleSheets, onSelect, onOpen3d, onOpenSheet, reorder }: SheetMatrixProps) {
+  const range = reorder?.range ?? null;
   return (
-    <div className={styles.matrix}>
+    <div className={styles.matrix} data-reordering={reorder?.drag ? '' : undefined}>
       <div className={styles.columns} aria-hidden="true">
         <span>Pliego</span>
         <span className={styles.columnFace}>
@@ -53,7 +77,17 @@ export const SheetMatrix = memo(function SheetMatrix({ blocks, pageCount, visibl
             </header>
             <div className={styles.rows}>
               {rows.map((row) => (
-                <SheetRow key={row.sheet.index} row={row} pageCount={pageCount} onSelect={onSelect} onOpen3d={onOpen3d} onOpenSheet={onOpenSheet} />
+                <SheetRow
+                  key={row.contentKey}
+                  row={row}
+                  pageCount={pageCount}
+                  onSelect={onSelect}
+                  onOpen3d={onOpen3d}
+                  onOpenSheet={onOpenSheet}
+                  movable={range !== null && row.sheet.index >= range.first && row.sheet.index <= range.last}
+                  drag={rowDragOf(reorder, row.sheet.index)}
+                  onStartDrag={reorder?.startDrag ?? null}
+                />
               ))}
             </div>
           </section>
@@ -69,9 +103,12 @@ interface SheetRowProps {
   onSelect: (slot: SlotModel) => void;
   onOpen3d: (page: number) => void;
   onOpenSheet: (sheetIndex: number, face: SheetFace) => void;
+  movable: boolean;
+  drag: RowDrag;
+  onStartDrag: ((sheetIndex: number, event: ReactPointerEvent<HTMLElement>) => void) | null;
 }
 
-const SheetRow = memo(function SheetRow({ row, pageCount, onSelect, onOpen3d, onOpenSheet }: SheetRowProps) {
+const SheetRow = memo(function SheetRow({ row, pageCount, onSelect, onOpen3d, onOpenSheet, movable, drag, onStartDrag }: SheetRowProps) {
   const { sheet, slots, primaryIssue } = row;
   const hovered = useProjectStore((state) => state.hover.sheet === sheet.index);
   const active = useMatrixUi((state) => state.activeSheet === sheet.index);
@@ -79,6 +116,14 @@ const SheetRow = memo(function SheetRow({ row, pageCount, onSelect, onOpen3d, on
   const { tone } = row;
   const numeral = sheetNumeral(sheet.number);
   const headId = `pliego-${sheet.index}-titulo`;
+  const grab = movable && onStartDrag !== null;
+  const startDrag = (event: ReactPointerEvent<HTMLElement>): void => {
+    if (!grab) return;
+    const target = event.target as HTMLElement;
+    const onGrip = target.closest('[data-sheet-grip]') !== null;
+    if (!onGrip && (event.pointerType === 'touch' || target.closest('button, a, [data-cell]'))) return;
+    onStartDrag(sheet.index, event);
+  };
 
   return (
     <article
@@ -86,14 +131,24 @@ const SheetRow = memo(function SheetRow({ row, pageCount, onSelect, onOpen3d, on
       data-sheet-row={sheet.index}
       data-hover={hovered ? '' : undefined}
       data-active={active ? '' : undefined}
+      data-flip-key={row.contentKey}
+      data-lifted={drag.lifted ? '' : undefined}
+      data-shifted={drag.shifted ? '' : undefined}
       aria-labelledby={headId}
       style={{ '--fill': row.stock.cssVar, '--rise': sheetRise(sheet) } as CSSProperties}
     >
-      <div className={styles.head}>
-        <h3 id={headId} className={styles.numeral}>
-          <span className="visually-hidden">Pliego </span>
-          {numeral}
-        </h3>
+      <div className={cx(styles.head, grab && styles.grabbable)} onPointerDown={grab ? startDrag : undefined}>
+        <div className={styles.titleLine}>
+          <h3 id={headId} className={styles.numeral}>
+            <span className="visually-hidden">Pliego </span>
+            {numeral}
+          </h3>
+          {grab && (
+            <span className={styles.grip} data-sheet-grip="" aria-hidden="true">
+              <Icon icon={GripVertical} size={16} />
+            </span>
+          )}
+        </div>
         <p className={styles.role}>{sheetRoleText(sheet)}</p>
         <span className={styles.edge} aria-hidden="true" />
         <div className={styles.headActions}>
@@ -103,6 +158,12 @@ const SheetRow = memo(function SheetRow({ row, pageCount, onSelect, onOpen3d, on
 
       <Face face="front" sheetNumber={sheet.number} left={a} right={b} pageCount={pageCount} onSelect={onSelect} onOpen3d={onOpen3d} />
       <Face face="back" sheetNumber={sheet.number} left={c} right={d} pageCount={pageCount} onSelect={onSelect} onOpen3d={onOpen3d} />
+
+      {drag.targetNumber !== null && (
+        <p className={styles.dropHint} role="status">
+          Posición {drag.targetNumber} · {drag.targetPages}
+        </p>
+      )}
 
       {primaryIssue && tone && (
         <div className={styles.issueLine}>

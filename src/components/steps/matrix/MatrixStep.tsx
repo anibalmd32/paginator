@@ -17,6 +17,7 @@ import { SheetMatrix } from './SheetMatrix';
 import { SheetTip } from './SheetTip';
 import { SidePanel } from './SidePanel';
 import { targetOf, useGridNavigation, type CellTarget } from './useGridNavigation';
+import { useSheetReorder } from './useSheetReorder';
 
 const TABS_ID = 'matriz-vista';
 const VIEW_TABS = [
@@ -99,6 +100,8 @@ function MatrixWorkspace() {
   const flaggedSet = useMemo(() => new Set(flagged), [flagged]);
   const visibleSheets = onlyIssues ? flaggedSet : null;
   const filterEmpty = onlyIssues && flagged.length === 0;
+  const printer = config.inputMode === 'spreads' && config.spreadKind === 'printer';
+  const reorder = useSheetReorder(scrollerRef, view === 'sheets' && !onlyIssues && !printer && !ingest.busy);
 
   const selectSlot = useCallback((slot: SlotModel) => {
     ui().selectPage(slot.page, slot.sheetIndex);
@@ -143,6 +146,12 @@ function MatrixWorkspace() {
     onOpen3d: (target) => openPageInViewer(target.page),
     onOpenSheet: (target) => openSheetInViewer(target.sheet, target.face),
     onEscape: () => ui().selectPage(null),
+    onMoveSheet: (target, delta) => {
+      if (!reorder) return;
+      const to = target.sheet + delta;
+      if (target.sheet < reorder.range.first || to < reorder.range.first || to > reorder.range.last) return;
+      reorder.move(target.sheet, to, { focus: true });
+    },
   });
 
   useEffect(() => {
@@ -255,7 +264,12 @@ function MatrixWorkspace() {
           </span>
         ) : (
           <span className={styles.keys} aria-hidden="true">
-            <Kbd>←↑↓→</Kbd> recorrer <Kbd>Intro</Kbd> detalle <Kbd>V</Kbd> en 3D <Kbd>D</Kbd> despiece
+            <Kbd>←↑↓→</Kbd> recorrer <Kbd>Intro</Kbd> detalle <Kbd>V</Kbd> en 3D <Kbd>D</Kbd> despiece{reorder && (
+              <>
+                {' '}
+                <Kbd>Alt+↑↓</Kbd> mover pliego
+              </>
+            )}
           </span>
         )
       }
@@ -320,7 +334,7 @@ function MatrixWorkspace() {
             onKeyDown={onGridKeyDown}
           >
             <p id="matriz-teclado" className="visually-hidden">
-              Flechas para recorrer las casillas, Intro para ver el detalle, V para abrir la página en 3D, D para abrir su cara en despiece, Escape para cerrar el detalle.
+              Flechas para recorrer las casillas, Intro para ver el detalle, V para abrir la página en 3D, D para abrir su cara en despiece, Escape para cerrar el detalle. En la vista por pliego físico, Alt con flecha arriba o abajo mueve el pliego entero con sus cuatro páginas, y la revista se renumera.
             </p>
             {filterEmpty ? (
               <EmptyState
@@ -335,7 +349,7 @@ function MatrixWorkspace() {
                 className={styles.filterEmpty}
               />
             ) : view === 'sheets' ? (
-              <SheetMatrix blocks={blocks} pageCount={pageCount} visibleSheets={visibleSheets} onSelect={selectSlot} onOpen3d={openPage3d} onOpenSheet={openSheet} />
+              <SheetMatrix blocks={blocks} pageCount={pageCount} visibleSheets={visibleSheets} onSelect={selectSlot} onOpen3d={openPage3d} onOpenSheet={openSheet} reorder={reorder} />
             ) : (
               <ReadingGrid derived={derived} config={config} spreads={spreads} visibleSheets={visibleSheets} onSelect={selectSlot} onOpen3d={openPage3d} />
             )}

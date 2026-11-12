@@ -15,6 +15,9 @@ export type { ImpositionOptions, PrinterSide } from './imposition';
 
 export { applyPadding, buildPages, classifyUnits, createManualBlank } from './segmentation';
 
+export { canMoveSheet, movableSheetRange, reorderSheets, sheetContentKey, sheetOrderAfterMove, slotPageNumbers } from './sheetOrder';
+export type { SheetRange } from './sheetOrder';
+
 export { estimateSpine, expectedUnitSizeMm, pageGeometry, resolveTrim } from './geometry';
 
 export { validateProject } from './validation';

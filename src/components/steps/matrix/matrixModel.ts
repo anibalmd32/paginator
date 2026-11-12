@@ -1,4 +1,5 @@
 import { slotLetter, type SlotLetter } from '@/components/report/labels';
+import { sheetContentKey } from '@/lib/imposition';
 import type { Derived } from '@/lib/store';
 import type { Issue, IssueCode, IssueSeverity, MagazineConfig, PageOrigin, SheetFace, SheetImposition, SignatureInfo, SlotPosition, Spread } from '@/lib/types';
 import { COVER_STOCK, NEUTRAL_STOCK, signatureStock } from '@/styles/stock';
@@ -24,6 +25,7 @@ export interface SlotModel {
 
 export interface SheetRowModel {
   sheet: SheetImposition;
+  contentKey: string;
   slots: readonly [SlotModel, SlotModel, SlotModel, SlotModel];
   stock: Stock;
   worst: IssueSeverity | undefined;
@@ -108,6 +110,7 @@ export function buildSignatureBlocks(derived: Derived, config: Pick<MagazineConf
       const placement = issues.filter((issue) => PLACEMENT_CODES.has(issue.code) && issue.severity !== 'info');
       return {
         sheet,
+        contentKey: sheetContentKey(derived.effectivePages, sheet),
         slots: [
           buildSlot(derived, config, sheet, 'front', 'left'),
           buildSlot(derived, config, sheet, 'front', 'right'),

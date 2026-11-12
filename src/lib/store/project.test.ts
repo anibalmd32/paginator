@@ -463,3 +463,46 @@ describe('abrir una revista guardada y restaurarla', () => {
     expect(store().pendingRestore?.plan?.missing.map((file) => file.name)).toEqual(['cubierta.pdf', 'tripa.pdf']);
   });
 });
+
+describe('mover pliegos en la matriz', () => {
+  const pagesOf = (count: number): File[] => files(...Array.from({ length: count }, (_, index): [string, number] => [`p${String(index + 1).padStart(2, '0')}`, 0.7]));
+
+  test('el pliego exterior pasa a ser el segundo y la lectura se renumera', async () => {
+    await store().addFiles(pagesOf(8));
+    const before = pageIds();
+    expect(store().moveSheet(0, 1)).toBe(true);
+    expect(pageIds()).toEqual([2, 3, 0, 1, 6, 7, 4, 5].map((index) => before[index] ?? ''));
+    expect(store().pagesEdited).toBe(true);
+    expect(store().moveSheet(1, 0)).toBe(true);
+    expect(pageIds()).toEqual(before);
+  });
+
+  test('las cortesías que siguen en su sitio no se fijan en el orden', async () => {
+    await store().addFiles(pagesOf(14));
+    store().moveSheet(2, 3);
+    expect(store().pages).toHaveLength(14);
+    expect(store().pages.every((page) => page.origin !== 'auto-blank')).toBe(true);
+  });
+
+  test('si el pliego movido lleva cortesías, viajan con él', async () => {
+    await store().addFiles(pagesOf(14));
+    const ids = (): string[] => store().pages.map((page) => (page.origin === 'auto-blank' ? 'blank' : page.id));
+    const first = pageIds()[0];
+    store().moveSheet(0, 3);
+    expect(store().pages).toHaveLength(16);
+    const list = ids();
+    expect(list[6]).toBe(first);
+    expect(list[8]).toBe('blank');
+    expect(list.filter((id) => id === 'blank')).toHaveLength(2);
+    store().moveSheet(3, 0);
+    expect(store().pages).toHaveLength(14);
+  });
+
+  test('con pliegos de imprenta no se mueve nada', async () => {
+    store().updateConfig({ inputMode: 'spreads', spreadKind: 'printer' });
+    await store().addFiles(files(['a', 2], ['b', 2], ['c', 2], ['d', 2]));
+    const before = pageIds();
+    expect(store().moveSheet(0, 1)).toBe(false);
+    expect(pageIds()).toEqual(before);
+  });
+});
