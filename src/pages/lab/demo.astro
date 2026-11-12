@@ -1,0 +1,31 @@
+---
+import { DemoLab } from '@/components/lab/DemoLab';
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Laboratorio · revista de ejemplo</title>
+    <style is:global>
+      html, body { margin: 0; font: 13px/1.4 system-ui, sans-serif; background: #8d8a84; color: #1b1a17; }
+      .lab-bar { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+        padding: 10px 16px; background: #f4f1ea; border-bottom: 1px solid #c9c3b6; }
+      .lab-bar button { font: inherit; padding: 4px 10px; }
+      .lab-status { padding: 8px 16px; background: #fffdf7; border-bottom: 1px solid #c9c3b6; }
+      .lab-meta { margin-top: 4px; color: #6f6a60; font-size: 11px; overflow-wrap: anywhere; }
+      .lab-grid { display: flex; flex-wrap: wrap; gap: 28px 36px; padding: 24px; }
+      .lab-spread { margin: 0; }
+      .lab-pair { display: flex; box-shadow: 0 6px 18px rgb(0 0 0 / 0.35); background: transparent; }
+      .lab-pair canvas + canvas { box-shadow: inset 1px 0 0 rgb(0 0 0 / 0.08); }
+      .lab-spread figcaption { margin-top: 6px; color: #f4f1ea; font-size: 12px; text-align: center; }
+      .lab-files { display: flex; flex-wrap: wrap; gap: 16px; padding: 24px; background: #5f5c57; }
+      .lab-files figure { margin: 0; }
+      .lab-files img { display: block; height: 240px; box-shadow: 0 4px 12px rgb(0 0 0 / 0.4); }
+      .lab-files figcaption { color: #f4f1ea; font-size: 11px; margin-top: 4px; }
+</style>
+  </head>
+  <body>
+    <DemoLab client:only="react" />
+  </body>
+</html>

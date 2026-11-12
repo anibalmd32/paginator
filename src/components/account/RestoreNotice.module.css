@@ -1,0 +1,133 @@
+.notice {
+  width: 100%;
+}
+
+.lead {
+  max-width: 68ch;
+}
+
+.tally {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-2);
+  margin-top: var(--space-2);
+  color: var(--ink-2);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+}
+
+.figure {
+  color: var(--ink);
+  font-weight: var(--weight-heavy);
+}
+
+.reading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.list {
+  display: grid;
+  max-width: 44rem;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--tone-rule);
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto 6.5rem;
+  align-items: center;
+  column-gap: var(--space-2);
+  min-height: 1.75rem;
+  border-bottom: 1px solid var(--tone-rule);
+}
+
+.rowIcon {
+  color: var(--ink-3);
+}
+
+.ok .rowIcon {
+  color: var(--success);
+}
+
+.name {
+  overflow: hidden;
+  font-weight: var(--weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.size {
+  color: var(--ink-2);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.state {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.ok .state {
+  color: var(--success-ink);
+  font-weight: var(--weight-semibold);
+}
+
+.details {
+  margin-top: var(--space-2);
+}
+
+.details .list {
+  max-height: 14rem;
+  overflow: auto;
+}
+
+.summary {
+  width: fit-content;
+  border-radius: var(--radius-sm);
+  color: var(--tone-ink);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+
+.summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.extra {
+  max-width: 68ch;
+  margin-top: var(--space-2);
+}
+
+.extra strong {
+  font-weight: var(--weight-semibold);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 599px) {
+  .row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .size {
+    display: none;
+  }
+}

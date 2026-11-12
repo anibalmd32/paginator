@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <title>Paginator</title>
+  <rect width="32" height="32" rx="6" fill="#00474d"/>
+  <rect x="6" y="6.5" width="11" height="4" rx="0.75" fill="#f7f7f4"/>
+  <rect x="6" y="11.5" width="15" height="4" rx="0.75" fill="#f7f7f4"/>
+  <rect x="6" y="16.5" width="20" height="4" rx="0.75" fill="#f7f7f4"/>
+  <rect x="6" y="21.5" width="20" height="4" rx="0.75" fill="#d2bf58"/>
+</svg>

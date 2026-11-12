@@ -1,0 +1,144 @@
+---
+const year = new Date().getFullYear();
+---
+
+<section class="closing" id="cierre" data-canto-region="cierre" aria-labelledby="cierre-titulo">
+  <div class="inner">
+    <h2 class="l-display title" id="cierre-titulo">Mándala a imprenta sabiendo cómo va.</h2>
+    <div class="side">
+      <p class="text">
+        Abre Paginator con tus archivos o empieza por la revista de ejemplo: está cargada, impuesta y abierta en 3D.
+      </p>
+      <div class="l-actions">
+        <a class="l-action onPetrol onPetrol--primary" href="/app">
+          Abrir Paginator
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
+        <a class="l-action onPetrol" href="/app?ejemplo=1">Ver la revista de ejemplo</a>
+      </div>
+    </div>
+  </div>
+  <footer class="colophon">
+    <p>
+      «Canto» es una revista ficticia generada para la demostración. <span class="brand">Paginator</span> · {year}
+    </p>
+    <nav class="legal" aria-label="Documentos legales">
+      <a href="/privacidad">Privacidad</a>
+      <a href="/condiciones">Condiciones de uso</a>
+    </nav>
+  </footer>
+</section>
+
+<style>
+  .closing {
+    margin-top: var(--l-section-gap);
+    background: var(--bar);
+    color: var(--on-bar);
+    scroll-margin-top: var(--l-bar-h);
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: end;
+    padding: var(--space-16) var(--l-gutter) var(--space-16);
+  }
+
+  .title {
+    max-width: 13em;
+  }
+
+  .side {
+    display: grid;
+    gap: var(--space-6);
+    padding-bottom: var(--space-2);
+  }
+
+  .text {
+    max-width: 30rem;
+    color: var(--on-bar-2);
+    font-size: var(--text-18);
+    line-height: 1.5;
+  }
+
+  .onPetrol {
+    --a-bg: transparent;
+    --a-bg-hover: var(--bar-tab);
+    --a-bg-active: var(--bar-tab-hover);
+    --a-fg: var(--on-bar);
+    --a-border: var(--on-bar-3);
+    --a-border-hover: var(--on-bar-2);
+  }
+
+  .onPetrol--primary {
+    --a-bg: var(--on-bar);
+    --a-bg-hover: var(--on-bar-2);
+    --a-bg-active: var(--on-bar-3);
+    --a-fg: var(--bar);
+    --a-border: transparent;
+    --a-border-hover: transparent;
+
+    font-weight: var(--weight-semibold);
+  }
+
+  .onPetrol:focus-visible {
+    outline-color: var(--focus-on-bar);
+  }
+
+  .colophon {
+    padding: var(--space-5) var(--l-gutter);
+    border-top: 1px solid var(--bar-rule);
+    color: var(--on-bar-2);
+    font-size: var(--text-13);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-6);
+  }
+
+  .legal {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  .legal a {
+    color: var(--on-bar-2);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .legal a:hover {
+    color: var(--on-bar);
+  }
+
+  .legal a:focus-visible {
+    outline: 2px solid var(--focus-on-bar);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  .brand {
+    color: var(--on-bar);
+    font-stretch: var(--width-expanded);
+    font-weight: var(--weight-heavy);
+  }
+
+  @media (max-width: 1023px) {
+    .inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+      padding-block: var(--space-12);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .l-actions {
+      display: grid;
+    }
+
+    .l-action {
+      width: 100%;
+    }
+  }
+</style>

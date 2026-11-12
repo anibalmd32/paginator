@@ -1,0 +1,40 @@
+.page {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: var(--space-6);
+  overflow: auto;
+}
+
+.working {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.title {
+  margin-top: var(--space-2);
+  font-size: var(--text-22);
+  font-stretch: var(--width-expanded);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-title);
+}
+
+.note {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+}
+
+.failure {
+  display: grid;
+  gap: var(--space-4);
+  width: min(32rem, 100%);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

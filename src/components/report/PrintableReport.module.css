@@ -1,0 +1,155 @@
+.report {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 16mm 14mm 18mm;
+  }
+
+  :global(html),
+  :global(body) {
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  :global(body *:not(:has([data-printable-report])):not([data-printable-report]):not([data-printable-report] *)) {
+    display: none !important;
+  }
+
+  .report {
+    display: block;
+    color: #000;
+    background: #fff;
+    font-size: 10pt;
+    line-height: 1.4;
+    font-stretch: 100%;
+    font-variant-numeric: tabular-nums;
+    print-color-adjust: exact;
+  }
+
+  .head {
+    padding-bottom: 4mm;
+    margin-bottom: 5mm;
+    border-bottom: 1.5pt solid #000;
+  }
+
+  .title {
+    font-size: 20pt;
+    font-stretch: 118%;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  .date {
+    margin-top: 1.5mm;
+    color: #333;
+    font-size: 9pt;
+  }
+
+  .section {
+    margin-top: 6mm;
+  }
+
+  .section h2 {
+    margin-bottom: 2mm;
+    font-size: 12pt;
+    font-weight: 700;
+    break-after: avoid;
+  }
+
+  .verdict {
+    font-size: 12pt;
+    font-weight: 600;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5mm 8mm;
+  }
+
+  .fact {
+    display: grid;
+    grid-template-columns: 34mm 1fr;
+    gap: 3mm;
+    break-inside: avoid;
+  }
+
+  .fact dt {
+    color: #333;
+  }
+
+  .fact dd {
+    margin: 0;
+  }
+
+  .issues {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .issue {
+    padding: 2mm 0;
+    border-top: 0.5pt solid #bbb;
+    break-inside: avoid;
+  }
+
+  .issue:last-child {
+    border-bottom: 0.5pt solid #bbb;
+  }
+
+  .issueTitle {
+    font-weight: 600;
+  }
+
+  .severity {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .issuePages {
+    color: #333;
+    font-size: 9pt;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+  }
+
+  .table thead {
+    display: table-header-group;
+  }
+
+  .table tr {
+    break-inside: avoid;
+  }
+
+  .table th {
+    padding: 1.2mm 2mm;
+    border-bottom: 1pt solid #000;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .table td {
+    padding: 1mm 2mm;
+    border-bottom: 0.5pt solid #bbb;
+    vertical-align: top;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,46 @@
+.diagram {
+  display: block;
+  flex: none;
+  width: 10rem;
+  height: auto;
+  overflow: visible;
+}
+
+.half {
+  fill: var(--paper-raised);
+}
+
+.halfOn {
+  fill: var(--petrol-soft);
+}
+
+.sheet {
+  fill: none;
+  stroke: var(--field-border);
+  stroke-width: 1;
+}
+
+.axis {
+  stroke: var(--ink-2);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+
+.mark {
+  stroke: var(--ink);
+  stroke-width: 1;
+}
+
+.numeral {
+  fill: var(--ink);
+  font-size: 22px;
+  font-stretch: var(--width-expanded);
+  font-weight: var(--weight-heavy);
+  font-variant-numeric: tabular-nums;
+}
+
+.caption {
+  fill: var(--ink-2);
+  font-size: 11px;
+  font-stretch: var(--width-condensed);
+}

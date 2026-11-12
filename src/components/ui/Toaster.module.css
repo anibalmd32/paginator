@@ -1,0 +1,113 @@
+.viewport {
+  position: fixed;
+  inset-block-end: calc(var(--footer-h) + var(--space-3));
+  inset-inline-end: var(--space-4);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(24rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.stack:empty {
+  display: none;
+}
+
+.toast {
+  --tone-icon: var(--success);
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-2) var(--space-3) var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--paper-float);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-13);
+  pointer-events: auto;
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    translate var(--dur-slow) var(--ease-out);
+}
+
+@starting-style {
+  .toast {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+.info {
+  --tone-icon: var(--info);
+}
+
+.warning {
+  --tone-icon: var(--warning);
+}
+
+.error {
+  --tone-icon: var(--error);
+}
+
+.icon {
+  margin-top: 0.125rem;
+  color: var(--tone-icon);
+}
+
+.content {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-14);
+  font-weight: var(--weight-semibold);
+  line-height: 1.35;
+}
+
+.description {
+  color: var(--ink-2);
+  line-height: var(--leading-text);
+}
+
+.action {
+  flex: none;
+  align-self: center;
+  height: var(--control-h-sm);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--petrol-ink);
+  font-size: var(--text-13);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.action:hover {
+  background: var(--paper-hover);
+}
+
+.close {
+  flex: none;
+  margin-top: -0.125rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @starting-style {
+    .toast {
+      translate: 0 0;
+    }
+  }
+}

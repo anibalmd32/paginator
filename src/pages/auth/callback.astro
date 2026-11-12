@@ -1,0 +1,7 @@
+---
+import { AuthCallback } from '@/components/account/AuthCallback';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+<BaseLayout title="Entrando… · Paginator" description="Acceso a Paginator con Google.">
+  <AuthCallback client:only="react" />
+</BaseLayout>

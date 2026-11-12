@@ -1,0 +1,206 @@
+.card {
+  position: relative;
+  width: calc(var(--page-w) + var(--card-pad));
+  padding-block: var(--card-pad);
+  border-radius: var(--radius-md);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.card[data-side='left'] {
+  padding-inline: var(--card-pad) 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.card[data-side='right'] {
+  padding-inline: 0 var(--card-pad);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.card[data-hovered] {
+  background: var(--paper-hover);
+}
+
+.card[data-selected] {
+  background: var(--petrol-soft);
+}
+
+.card[data-lifted] {
+  opacity: 0.45;
+}
+
+.hit {
+  display: grid;
+  gap: var(--space-1);
+  width: 100%;
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.grab {
+  cursor: grab;
+}
+
+.hit:focus-visible {
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.frame {
+  position: relative;
+  display: block;
+}
+
+.card[data-selected] .frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  outline: 2px solid var(--petrol);
+  outline-offset: -2px;
+  pointer-events: none;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-2);
+  min-width: 0;
+  padding-inline: 1px;
+}
+
+.card[data-side='right'] .meta {
+  flex-direction: row-reverse;
+}
+
+.number {
+  color: var(--ink);
+  font-size: var(--text-16);
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-heavy);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+
+.card[data-selected] .number {
+  color: var(--petrol-ink);
+}
+
+.slot {
+  display: flex;
+  flex: 1 0 100%;
+  flex-wrap: wrap;
+  column-gap: 0.25em;
+  min-width: 0;
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+  line-height: var(--leading-title);
+}
+
+.slotPart {
+  white-space: nowrap;
+}
+
+.card[data-side='right'] .slot {
+  justify-content: flex-end;
+}
+
+.card[data-sibling] .slot,
+.card[data-hovered] .slot {
+  color: var(--petrol-ink);
+  font-weight: var(--weight-semibold);
+}
+
+.flag {
+  display: inline-flex;
+}
+
+.folio {
+  color: var(--warning-ink);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--leading-title);
+}
+
+.card[data-side='right'] .folio {
+  text-align: end;
+}
+
+.tipList {
+  display: grid;
+  gap: var(--space-1);
+  max-width: 18rem;
+}
+
+.menu {
+  position: absolute;
+  top: calc(var(--card-pad) + var(--space-1));
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.card[data-side='left'] .menu {
+  left: calc(var(--card-pad) + var(--space-1));
+}
+
+.card[data-side='right'] .menu {
+  right: calc(var(--card-pad) + var(--space-1));
+}
+
+.card:hover .menu,
+.card:focus-within .menu,
+.card[data-menu-open] .menu {
+  opacity: 1;
+}
+
+.menuButton {
+  box-shadow: var(--shadow-handle);
+}
+
+:global([data-reordering]) .card .menu {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.card[data-drop-edge]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: var(--z-raised);
+  width: 3px;
+  border-radius: 2px;
+  background: var(--petrol);
+}
+
+.card[data-drop-edge='left']::before {
+  left: -2px;
+}
+
+.card[data-drop-edge='right']::before {
+  right: -2px;
+}
+
+.card[data-empty] {
+  pointer-events: none;
+}
+
+.void {
+  display: block;
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .menu {
+    transition: none;
+  }
+}

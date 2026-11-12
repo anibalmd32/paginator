@@ -1,0 +1,126 @@
+---
+import { LandingAccount } from '@/components/account/LandingAccount';
+import { ThemeToggle } from '@/components/shell/ThemeToggle';
+import { cloudMode } from '@/lib/cloud';
+
+const accounts = cloudMode() !== 'disabled';
+---
+
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="bar" data-landing-bar>
+  <a class="brand" href="/" aria-label="Paginator, inicio">
+    <svg class="mark" viewBox="0 0 32 32" width="24" height="24" aria-hidden="true" focusable="false">
+      <rect class="markTile" width="32" height="32" rx="5" />
+      <rect class="markSheet" x="6" y="6.5" width="11" height="4" rx="0.75" />
+      <rect class="markSheet" x="6" y="11.5" width="15" height="4" rx="0.75" />
+      <rect class="markSheet" x="6" y="16.5" width="20" height="4" rx="0.75" />
+      <rect class="markCover" x="6" y="21.5" width="20" height="4" rx="0.75" />
+    </svg>
+    <span class="brandName">Paginator</span>
+  </a>
+  <div class="tools">
+    <ThemeToggle client:idle surface="paper" />
+    {accounts && <LandingAccount client:only="react" />}
+    <a class="l-action l-action--sm barAction" href="/app">Abrir Paginator</a>
+  </div>
+</header>
+
+<style>
+  .skip {
+    position: fixed;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: var(--z-tooltip);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--paper-float);
+    color: var(--ink);
+    box-shadow: var(--shadow-float);
+    font-weight: var(--weight-semibold);
+    translate: 0 -200%;
+  }
+
+  .skip:focus-visible {
+    translate: 0 0;
+  }
+
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    height: var(--l-bar-h);
+    padding-inline: var(--l-gutter) calc(var(--l-canto-w) + var(--l-gutter));
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .mark {
+    flex: none;
+  }
+
+  .markTile {
+    fill: var(--bar);
+  }
+
+  .markSheet {
+    fill: var(--on-bar);
+  }
+
+  .markCover {
+    fill: var(--stock-2);
+  }
+
+  .brandName {
+    font-size: var(--text-18);
+    font-stretch: var(--width-expanded);
+    font-weight: var(--weight-heavy);
+    letter-spacing: var(--tracking-title);
+    line-height: 1;
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .bar[data-past-hero] .barAction {
+    --a-bg: var(--petrol);
+    --a-bg-hover: var(--petrol-hover);
+    --a-bg-active: var(--petrol-active);
+    --a-fg: var(--on-petrol);
+    --a-border: transparent;
+    --a-border-hover: transparent;
+
+    font-weight: var(--weight-semibold);
+  }
+
+  @media (max-width: 767px) {
+    .bar {
+      padding-inline: var(--l-gutter);
+    }
+
+    .tools {
+      gap: var(--space-2);
+    }
+  }
+
+  @media (max-width: 439px) {
+    .brandName {
+      display: none;
+    }
+  }
+</style>

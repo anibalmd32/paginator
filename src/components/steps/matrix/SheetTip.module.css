@@ -1,0 +1,41 @@
+.tip {
+  display: grid;
+  gap: var(--space-2);
+  font-size: var(--text-12);
+}
+
+.head {
+  color: var(--ink-2);
+}
+
+.head strong {
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+
+.faces {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.face {
+  display: grid;
+  gap: var(--space-1);
+  justify-items: center;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 2.5rem 2.5rem;
+}
+
+.thumb {
+  width: 2.5rem;
+}
+
+.caption {
+  color: var(--ink-2);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+}

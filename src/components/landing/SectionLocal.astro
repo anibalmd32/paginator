@@ -1,0 +1,70 @@
+---
+import { LocalFileProof } from './LocalFileProof';
+import { folioOf } from './sections';
+---
+
+<section class="l-section" id="local" data-canto-region="local" aria-labelledby="local-titulo">
+  <header class="l-opener">
+    <div class="l-opener__head">
+      <span class="l-folio l-opener__folio" aria-hidden="true">{folioOf('local')}</span>
+      <h2 class="l-title" id="local-titulo">Tus archivos no salen de tu equipo</h2>
+      <p class="l-lede l-opener__dek">
+        Paginator abre, rasteriza e impone los PDF y las imágenes <strong>en tu navegador</strong>, con tu propio equipo.
+        Pruébalo con uno tuyo.
+      </p>
+    </div>
+  </header>
+
+  <div class="body">
+    <LocalFileProof client:visible />
+
+    <div class="text">
+      <p class="l-body">
+        No hay ningún servidor que reciba tus archivos ni una copia en la nube: cierra la pestaña y no queda nada fuera de
+        tu ordenador.
+      </p>
+      <p class="l-body">
+        Así puedes revisar material inédito —la portada que aún no se ha anunciado, el número que sale la semana que
+        viene— sin que salga del estudio. Hasta la revista de ejemplo de la aplicación se dibuja ahí mismo, página a
+        página, en un lienzo del navegador.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 40rem) minmax(0, 24rem);
+    gap: var(--space-16);
+    align-items: start;
+    margin-top: var(--space-12);
+    padding-inline: var(--l-gutter);
+  }
+
+  .text {
+    display: grid;
+    gap: var(--space-5);
+    padding-top: var(--space-2);
+  }
+
+  .l-lede strong {
+    color: var(--ink);
+    font-weight: var(--weight-semibold);
+  }
+
+  @media (max-width: 1279px) {
+    .body {
+      grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+      gap: var(--space-10);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+      margin-top: var(--space-10);
+    }
+  }
+</style>

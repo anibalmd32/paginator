@@ -1,0 +1,183 @@
+---
+import { folioOf } from './sections';
+import ThemedShot from './ThemedShot.astro';
+
+const SPREADS: ReadonlyArray<{ left: number; right: number; alt: [string, string] }> = [
+  {
+    left: 2,
+    right: 3,
+    alt: ['Página 2 de «Canto»: «Aprende a doblar antes de aprender a maquetar»', 'Página 3 de «Canto»: el sumario del número'],
+  },
+  {
+    left: 4,
+    right: 5,
+    alt: ['Página 4 de «Canto»: apertura del artículo «El pliego sabe contar»', 'Página 5 de «Canto»: ilustración de una revista abierta por el lomo y el artículo a dos columnas con una cita destacada'],
+  },
+  {
+    left: 12,
+    right: 13,
+    alt: [
+      'Página 12 de «Canto»: «La imprenta de la calle Almagre», con la ilustración de la fachada',
+      'Página 13 de «Canto»: la ilustración continúa desde la página 12 y el texto a dos columnas',
+    ],
+  },
+];
+
+const src = (n: number): string => `/landing/canto/p${String(n).padStart(2, '0')}.jpg`;
+---
+
+<section class="l-section" id="carga" data-canto-region="carga" aria-labelledby="carga-titulo">
+  <header class="l-opener">
+    <div class="l-opener__head">
+      <span class="l-folio l-opener__folio" aria-hidden="true">{folioOf('carga')}</span>
+      <h2 class="l-title" id="carga-titulo">Carga y segmentación</h2>
+      <p class="l-lede l-opener__dek">
+        Sube un PDF o una carpeta de imágenes, tal como salen de maquetación: páginas sueltas o pliegos dobles. Paginator
+        corta cada pliego por el lomo y deja cada página en su sitio.
+      </p>
+    </div>
+  </header>
+
+  <ul class="spreads" aria-label="Pliegos de lectura de la revista de ejemplo">
+    {
+      SPREADS.map((spread) => (
+        <li class="spread">
+          <div class="spreadPages">
+            <img src={src(spread.left)} alt={spread.alt[0]} width="990" height="1400" loading="lazy" decoding="async" />
+            <img src={src(spread.right)} alt={spread.alt[1]} width="990" height="1400" loading="lazy" decoding="async" />
+            <span class="cut" aria-hidden="true" />
+          </div>
+          <p class="spreadFolios">
+            <span class="l-folio">{spread.left}</span>
+            <span class="cutLabel">corte por el lomo</span>
+            <span class="l-folio">{spread.right}</span>
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="body">
+    <ul class="l-notes">
+      <li>
+        <h3>PDF o imágenes</h3>
+        <p>PDF de varias páginas, o PNG, JPG y WebP. Las imágenes se ordenan por nombre como lo haría una persona: la 2 antes que la 10.</p>
+      </li>
+      <li>
+        <h3>Páginas sueltas o pliegos</h3>
+        <p>
+          Pliegos de lectura (la 2 con la 3, la 4 con la 5) o caras ya impuestas, que se deshacen con la imposición inversa.
+          Si la cubierta llega envolvente, se separa en contraportada y portada.
+        </p>
+      </li>
+      <li>
+        <h3>Sangrado y marcas</h3>
+        <p>Indica el sangrado y el margen de marcas que trae el archivo, y cada página se recorta a su caja de corte.</p>
+      </li>
+    </ul>
+
+    <figure class="l-shot shot">
+      <div class="l-shot__frame">
+        <ThemedShot
+          name="carga"
+          alt="Paso de carga de Paginator con «Canto»: rejilla de páginas en orden de lectura con su pliego, cara o retiro y lado del lomo debajo de cada una; a la derecha, la lista de archivos y el panel de segmentación (24 hojas, 24 páginas)."
+          sizes="(max-width: 1023px) 100vw, 60vw"
+        />
+      </div>
+      <figcaption class="l-caption">
+        <b>Carga.</b> Cada página dice en qué pliego cae, si va en la cara o en el retiro y a qué lado del lomo.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .spreads {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-8);
+    margin-top: var(--space-12);
+    padding-inline: var(--l-gutter);
+  }
+
+  .spread {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .spreadPages {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    outline: 1px solid var(--rule-strong);
+    background: var(--page-paper);
+  }
+
+  .spreadPages img {
+    width: 100%;
+    height: auto;
+  }
+
+  .cut {
+    position: absolute;
+    top: -0.5rem;
+    bottom: -0.5rem;
+    left: 50%;
+    border-left: 2px dashed var(--guide-trim);
+    translate: -1px 0;
+  }
+
+  .spreadFolios {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: var(--space-2);
+    padding-top: var(--space-1);
+  }
+
+  .spreadFolios .l-folio {
+    color: var(--ink);
+    font-size: var(--text-22);
+  }
+
+  .cutLabel {
+    color: var(--ink-2);
+    font-size: var(--text-12);
+    text-align: center;
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: minmax(16rem, 21rem) minmax(0, 1fr);
+    gap: var(--space-16);
+    align-items: start;
+    margin-top: var(--space-16);
+    padding-inline: var(--l-gutter);
+  }
+
+  @media (max-width: 1023px) {
+    .spreads {
+      gap: var(--space-5);
+    }
+
+    .body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-10);
+    }
+
+    .shot {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .spreads {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+
+    .spread:nth-child(n + 3) {
+      display: none;
+    }
+  }
+</style>

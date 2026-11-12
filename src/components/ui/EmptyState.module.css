@@ -1,0 +1,77 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-10) var(--space-6);
+  color: var(--ink);
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-lg);
+  background: var(--paper-raised);
+  color: var(--petrol-ink);
+}
+
+.illustration {
+  margin-bottom: var(--space-3);
+  color: var(--ink-3);
+}
+
+.title {
+  font-size: var(--text-18);
+  font-stretch: var(--width-normal);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-title);
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 44ch;
+  color: var(--ink-2);
+  font-size: var(--text-14);
+  line-height: var(--leading-text);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.footnote {
+  margin-top: var(--space-1);
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.compact {
+  gap: var(--space-1);
+  padding: var(--space-6) var(--space-4);
+}
+
+.compact .icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: var(--space-1);
+}
+
+.compact .title {
+  font-size: var(--text-14);
+}
+
+.compact .description {
+  font-size: var(--text-13);
+}

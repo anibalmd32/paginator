@@ -1,0 +1,132 @@
+.root {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: var(--control-h);
+  padding-block: 0.4375rem;
+  cursor: pointer;
+}
+
+.labelFirst {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.input {
+  position: absolute;
+  inset-block-start: 0.4375rem;
+  inset-inline-start: 0;
+  width: 2rem;
+  height: 1.125rem;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.labelFirst .input {
+  inset-inline: auto 0;
+}
+
+.track {
+  flex: none;
+  display: block;
+  width: 2rem;
+  height: 1.125rem;
+  padding: 2px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-round);
+  background: var(--paper-raised);
+  transition:
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.thumb {
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: var(--radius-round);
+  background: var(--ink-3);
+  transition:
+    translate var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.root:hover .track {
+  border-color: var(--field-border-hover);
+}
+
+.input:checked + .track {
+  border-color: var(--petrol);
+  background: var(--petrol);
+}
+
+.input:checked + .track .thumb {
+  translate: 0.875rem 0;
+  background: var(--on-petrol);
+}
+
+.root:hover .input:checked + .track {
+  border-color: var(--petrol-hover);
+  background: var(--petrol-hover);
+}
+
+.input:focus-visible + .track {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.text {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.label {
+  color: var(--ink);
+  font-size: var(--text-14);
+  line-height: 1.125rem;
+}
+
+.description {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  line-height: 1.4;
+}
+
+.root[data-disabled] {
+  cursor: not-allowed;
+}
+
+.root[data-disabled] .track {
+  border-color: var(--rule);
+  background: var(--paper-sunken);
+}
+
+.root[data-disabled] .thumb {
+  background: var(--ink-disabled);
+}
+
+.root[data-disabled] .input:checked + .track {
+  border-color: var(--rule-strong);
+  background: var(--rule-strong);
+}
+
+.root[data-disabled] .input:checked + .track .thumb {
+  background: var(--paper-raised);
+}
+
+.root[data-disabled] .label,
+.root[data-disabled] .description {
+  color: var(--ink-disabled);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb {
+    transition: background-color var(--dur) linear;
+  }
+}

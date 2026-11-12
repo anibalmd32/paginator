@@ -1,0 +1,43 @@
+---
+import LegalDocument from '@/components/legal/LegalDocument.astro';
+
+const contact = import.meta.env.PUBLIC_CONTACT_EMAIL?.trim() || null;
+---
+
+<LegalDocument
+  title="Condiciones de uso"
+  description="Condiciones para usar Paginator, la herramienta de verificación e imposición de revistas."
+  updated="12 de noviembre de 2026"
+>
+  <h2>El servicio</h2>
+  <p>
+    Paginator es una herramienta para verificar la paginación de una revista, calcular su imposición y previsualizarla
+    en 3D. Funciona en tu navegador y su uso es gratuito. La cuenta con Google es opcional y sirve para guardar revistas.
+  </p>
+
+  <h2>Tus archivos y tu trabajo</h2>
+  <p>
+    Los archivos que cargas siguen siendo tuyos y no salen de tu equipo (ver <a href="/privacidad">Privacidad</a>).
+    Eres responsable de tener derecho a usar el material que cargas.
+  </p>
+
+  <h2>Revisa antes de imprimir</h2>
+  <p>
+    Paginator te ayuda a encontrar errores, pero no sustituye la revisión de pre-prensa ni la prueba de imprenta.
+    Comprueba siempre el resultado con tu imprenta antes de enviar a plancha. No respondemos de costes de impresión,
+    reimpresiones ni pérdidas derivadas de un error que la herramienta no detecte.
+  </p>
+
+  <h2>Uso razonable</h2>
+  <p>
+    Cada cuenta puede guardar hasta 200 revistas. No está permitido intentar acceder a datos de otras cuentas ni
+    sobrecargar el servicio de forma deliberada; podemos suspender las cuentas que lo hagan.
+  </p>
+
+  <h2>Disponibilidad y cambios</h2>
+  <p>
+    El servicio se ofrece tal cual, sin garantía de disponibilidad continua. Podemos cambiar estas condiciones o el
+    servicio; si el cambio afecta a lo que se guarda de tu cuenta, lo indicaremos en esta página y en la de privacidad.
+    {contact && <>Para cualquier consulta, escribe a <a href={`mailto:${contact}`}>{contact}</a>.</>}
+  </p>
+</LegalDocument>

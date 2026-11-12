@@ -1,0 +1,62 @@
+.list {
+  display: grid;
+}
+
+.issue {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.issue:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pages {
+  color: var(--petrol-ink);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.pages:hover {
+  text-decoration-thickness: 2px;
+}
+
+.title {
+  font-size: var(--text-13);
+  font-weight: var(--weight-semibold);
+}
+
+.detail {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.fix {
+  margin-top: var(--space-1);
+}
+
+.clean {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-2);
+  font-size: var(--text-13);
+}

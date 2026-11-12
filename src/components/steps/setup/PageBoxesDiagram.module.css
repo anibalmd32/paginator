@@ -1,0 +1,174 @@
+.figure {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4) var(--space-6);
+  margin: 0;
+  min-width: 0;
+}
+
+.caption {
+  flex: 1 1 9rem;
+  min-width: 9rem;
+  max-width: 14rem;
+  padding-top: var(--space-3);
+}
+
+.views {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.svg {
+  display: block;
+  flex: none;
+  overflow: visible;
+}
+
+.file {
+  fill: var(--paper-raised);
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.fileMarks {
+  fill: var(--paper-sunken);
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.bleed {
+  fill: color-mix(in oklch, var(--guide-bleed) 14%, var(--paper-raised));
+  stroke: var(--guide-bleed);
+  stroke-width: 1;
+}
+
+.trim {
+  fill: var(--paper-raised);
+  stroke: var(--guide-trim);
+  stroke-width: 1.25;
+}
+
+.safe {
+  fill: none;
+  stroke: var(--guide-safe);
+  stroke-width: 1.25;
+  stroke-dasharray: 3 2;
+}
+
+.crop {
+  stroke: var(--ink);
+  stroke-width: 1;
+}
+
+.window {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1;
+  stroke-dasharray: 1.5 1.5;
+}
+
+.frame {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.cota line {
+  stroke: var(--ink-3);
+  stroke-width: 1;
+}
+
+.cotaText {
+  fill: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-semibold);
+  text-anchor: middle;
+}
+
+.cotaBack {
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.zoom {
+  fill: var(--ink-3);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-semibold);
+  text-anchor: end;
+}
+
+.segLine {
+  stroke-width: 1.25;
+}
+
+.seg-marks .segLine {
+  stroke: var(--ink-2);
+}
+
+.seg-bleed .segLine {
+  stroke: var(--guide-bleed);
+}
+
+.seg-safe .segLine {
+  stroke: var(--guide-safe);
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: var(--space-2);
+  row-gap: 0.125rem;
+  font-size: var(--text-12);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.legend li {
+  display: contents;
+}
+
+.value {
+  color: var(--ink);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-semibold);
+  text-align: end;
+  white-space: nowrap;
+}
+
+.swatchTrim,
+.swatchBleed,
+.swatchSafe,
+.swatchMarks {
+  align-self: center;
+  width: 0.875rem;
+  height: 0;
+  border-top: 2px solid;
+}
+
+.swatchTrim {
+  border-top-color: var(--guide-trim);
+}
+
+.swatchBleed {
+  border-top-color: var(--guide-bleed);
+}
+
+.swatchSafe {
+  border-top-style: dashed;
+  border-top-color: var(--guide-safe);
+}
+
+.swatchMarks {
+  border-top-width: 1px;
+  border-top-color: var(--ink);
+}

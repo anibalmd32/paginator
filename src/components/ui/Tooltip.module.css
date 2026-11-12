@@ -1,0 +1,29 @@
+.anchor {
+  display: contents;
+}
+
+.bubble {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: var(--z-tooltip);
+  max-width: 18rem;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--inverse);
+  color: var(--on-inverse);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-12);
+  font-weight: var(--weight-medium);
+  line-height: 1.35;
+  text-wrap: balance;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+@starting-style {
+  .bubble {
+    opacity: 0;
+  }
+}

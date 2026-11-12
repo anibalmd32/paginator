@@ -1,0 +1,12 @@
+.onBar {
+  --paper-sunken: var(--bar-field);
+  --rule-strong: var(--bar-rule);
+  --paper-hover: var(--bar-tab);
+  --paper-active: var(--bar-tab-hover);
+  --ink: var(--on-bar);
+  --ink-2: var(--on-bar-2);
+  --petrol-soft: var(--on-bar);
+  --petrol-rule: var(--on-bar);
+  --petrol-ink: var(--bar);
+  --focus: var(--focus-on-bar);
+}

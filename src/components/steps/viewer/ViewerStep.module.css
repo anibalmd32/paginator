@@ -1,0 +1,472 @@
+.root {
+  --edge: var(--space-3);
+
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--stage);
+  color: var(--stage-ink);
+}
+
+.root[data-fullscreen] {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-header);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.stage:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -4px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  padding: var(--edge);
+  pointer-events: none;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+}
+
+.topStart {
+  grid-column: 1;
+  justify-self: start;
+  min-width: 0;
+}
+
+.topCenter {
+  grid-column: 2;
+  justify-self: center;
+  min-width: 0;
+}
+
+.topEnd {
+  grid-column: 3;
+  justify-self: end;
+  min-width: 0;
+}
+
+@media (max-width: 56rem) {
+  .top {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: var(--space-2);
+  }
+
+  .topEnd {
+    grid-column: 2;
+  }
+
+  .topCenter {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 43rem) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .topEnd {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .topCenter {
+    grid-row: 3;
+  }
+}
+
+.bottom {
+  grid-row: 3;
+  justify-self: center;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.float {
+  pointer-events: auto;
+  border-radius: var(--radius-lg);
+  background: var(--paper-float);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+}
+
+.toolbar {
+  padding: var(--space-1);
+  flex-wrap: nowrap;
+}
+
+.guide {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: calc(var(--control-h-sm) + var(--space-2));
+  padding: var(--space-1);
+  border-radius: var(--radius-lg);
+  background: var(--paper-float);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+}
+
+.guideButton {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  height: var(--control-h-sm);
+  padding: 0.3rem var(--space-3) 0;
+  border-radius: var(--radius-sm);
+  color: var(--ink-2);
+  font-size: var(--text-14);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: text;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.guideButton:hover {
+  background: var(--paper-hover);
+}
+
+.guideButton:disabled {
+  color: var(--ink-disabled);
+  cursor: default;
+}
+
+.guideButton:disabled:hover {
+  background: transparent;
+}
+
+.guideWord {
+  color: var(--ink-2);
+}
+
+.guidePages {
+  color: var(--ink);
+  font-size: var(--text-16);
+  font-weight: var(--weight-semibold);
+}
+
+.guideNumeral {
+  color: var(--ink);
+  font-size: var(--text-18);
+  font-stretch: var(--width-expanded);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-title);
+}
+
+.guideFace {
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+
+.guideDot {
+  color: var(--ink-3);
+}
+
+.guideSpinner {
+  margin-inline: var(--space-1) var(--space-2);
+  color: var(--ink-2);
+}
+
+.guideEdit {
+  position: relative;
+}
+
+.guideField {
+  width: 10.5rem;
+}
+
+.guideError {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-start: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--error-rule);
+  border-radius: var(--radius-sm);
+  background: var(--error-soft);
+  color: var(--error-ink);
+  font-size: var(--text-12);
+  white-space: nowrap;
+  translate: -50% 0;
+}
+
+.guideErrorIcon {
+  color: var(--error);
+}
+
+.cantoBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: 100%;
+  padding: 0 var(--space-1);
+}
+
+.faceControl {
+  margin-inline-end: var(--space-2);
+}
+
+.cantoSlot {
+  flex: 0 1 auto;
+  width: clamp(14rem, calc(var(--leaves) * 1.25rem + 2rem), 56rem);
+  min-width: 8rem;
+  padding-inline: var(--space-2);
+}
+
+.tip {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-width: 9rem;
+}
+
+.tipPages {
+  display: flex;
+  gap: 1px;
+  margin-block-end: var(--space-1);
+  padding: 1px;
+  background: var(--rule-strong);
+}
+
+.tipThumb {
+  width: 3.75rem;
+}
+
+.tipVoid {
+  width: 3.75rem;
+  background: var(--paper-float);
+}
+
+.tipTitle {
+  font-size: var(--text-13);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.tipLine {
+  color: var(--ink-2);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+  white-space: nowrap;
+}
+
+.tipFolio {
+  color: var(--ink);
+  font-weight: var(--weight-semibold);
+}
+
+.pageLabels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pageLabelAnchor {
+  position: absolute;
+  inset-block-start: 0;
+  left: 0;
+  visibility: hidden;
+  will-change: transform;
+}
+
+.pageLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.1875rem var(--space-2);
+  border: 1px solid var(--stage-rule);
+  border-radius: var(--radius-md);
+  background: var(--stage);
+  color: var(--stage-ink-2);
+  white-space: nowrap;
+  translate: -50% 0;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.pageLabelRight {
+  flex-direction: row-reverse;
+}
+
+.pageLabelFolio {
+  color: var(--stage-ink);
+  font-size: var(--text-18);
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-heavy);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-title);
+  line-height: 1;
+}
+
+.pageLabelSlot {
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+}
+
+.pageLabelNote {
+}
+
+.pageLabelFlag {
+  display: inline-flex;
+}
+
+.pageLabelFlag svg {
+  fill: currentColor;
+}
+
+.pageLabel[data-highlighted] {
+  border-color: var(--petrol-rule);
+  background: var(--petrol-soft);
+  color: var(--petrol-ink);
+}
+
+.pageLabel[data-highlighted] .pageLabelFolio {
+  color: var(--petrol-ink);
+}
+
+.flag-error {
+  color: var(--error);
+}
+
+.flag-warning {
+  color: var(--warning);
+}
+
+.flag-info {
+  color: var(--info);
+}
+
+.centerLayer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-raised);
+  display: grid;
+  place-items: center;
+  padding: var(--space-16) var(--space-6);
+  pointer-events: none;
+}
+
+.centerLayer > * {
+  pointer-events: auto;
+}
+
+.errorCard {
+  max-width: 34rem;
+  box-shadow: var(--shadow-float);
+}
+
+.errorCard p + p {
+  margin-block-start: var(--space-1);
+}
+
+.emptyCard {
+  max-width: 30rem;
+  padding: var(--space-8) var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--paper-float);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+}
+
+.panel {
+  font-size: var(--text-13);
+}
+
+.guideOptions {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 16rem;
+}
+
+.swatch {
+  display: inline-block;
+  width: 0.875rem;
+  margin-inline-end: 0.375rem;
+  border-block-start: 2px solid var(--swatch);
+  vertical-align: middle;
+}
+
+.swatch-trim {
+  --swatch: var(--guide-trim);
+}
+
+.swatch-safe {
+  --swatch: var(--guide-safe);
+}
+
+.swatch-bleed {
+  --swatch: var(--guide-bleed);
+}
+
+.shortcutsPanel {
+  max-width: min(28rem, calc(100vw - 1rem));
+}
+
+.shortcuts {
+  width: 100%;
+}
+
+.shortcuts tr + tr > * {
+  border-block-start: 1px solid var(--rule);
+}
+
+.shortcutKeys {
+  padding: 0.3125rem var(--space-3) 0.3125rem 0;
+  font-weight: var(--weight-regular);
+  text-align: start;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.shortcutOr {
+  margin-inline: 0.25rem;
+  color: var(--ink-3);
+}
+
+.shortcutAction {
+  padding-block: 0.3125rem;
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageLabel,
+  .guideButton {
+    transition-property: opacity;
+  }
+}

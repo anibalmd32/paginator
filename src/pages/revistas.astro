@@ -1,0 +1,7 @@
+---
+import { MyProjectsPage } from '@/components/account/MyProjectsPage';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+<BaseLayout title="Mis revistas · Paginator" description="Tus revistas guardadas en Paginator: configuración y orden de páginas, sin los archivos.">
+  <MyProjectsPage client:only="react" />
+</BaseLayout>

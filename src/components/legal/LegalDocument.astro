@@ -1,0 +1,98 @@
+---
+import LandingDocument from '@/components/landing/LandingDocument.astro';
+import TopBar from '@/components/landing/TopBar.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  updated: string;
+}
+
+const { title, description, updated } = Astro.props;
+---
+
+<LandingDocument
+  title={`${title} · Paginator`}
+  description={description}
+  ogImage="/landing/app/pliegos-error-light.png"
+  ogImageAlt="Matriz de pliegos de Paginator señalando que la página 5 lleva el folio 9."
+>
+  <TopBar />
+  <main id="contenido" class="legal">
+    <h1 class="l-title">{title}</h1>
+    <p class="updated">Última revisión: {updated}</p>
+    <div class="prose">
+      <slot />
+    </div>
+    <nav class="links" aria-label="Documentos legales">
+      <a href="/privacidad">Privacidad</a>
+      <a href="/condiciones">Condiciones de uso</a>
+      <a href="/">Inicio</a>
+    </nav>
+  </main>
+</LandingDocument>
+
+<style>
+  .legal {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: var(--space-16) var(--space-6) var(--space-16);
+  }
+
+  .updated {
+    margin-top: var(--space-3);
+    color: var(--ink-3);
+    font-size: var(--text-14);
+  }
+
+  .prose {
+    margin-top: var(--space-10);
+    color: var(--ink-2);
+    font-size: var(--text-16);
+    line-height: 1.65;
+  }
+
+  .prose :global(h2) {
+    margin-top: var(--space-10);
+    color: var(--ink);
+    font-size: var(--text-18);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-title);
+  }
+
+  .prose :global(p),
+  .prose :global(ul) {
+    margin-top: var(--space-3);
+  }
+
+  .prose :global(ul) {
+    padding-left: var(--space-5);
+    list-style: disc;
+  }
+
+  .prose :global(li + li) {
+    margin-top: var(--space-2);
+  }
+
+  .prose :global(strong) {
+    color: var(--ink);
+    font-weight: var(--weight-semibold);
+  }
+
+  .prose :global(a),
+  .links a {
+    color: var(--petrol-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    margin-top: var(--space-16);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--rule);
+    font-size: var(--text-14);
+  }
+</style>

@@ -1,0 +1,68 @@
+.summary {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.headline {
+  font-size: var(--text-16);
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--leading-title);
+}
+
+.breakdown {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+  font-variant-numeric: tabular-nums;
+}
+
+.controls {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.note {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+}
+
+.link {
+  color: var(--petrol-ink);
+  font-weight: var(--weight-medium);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.cut {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding-top: var(--space-1);
+}
+
+.caption {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  font-variant-numeric: tabular-nums;
+}
+
+.captionTitle {
+  color: var(--ink);
+  font-size: var(--text-13);
+  font-weight: var(--weight-semibold);
+}
+
+.captionFile {
+  overflow-wrap: anywhere;
+}

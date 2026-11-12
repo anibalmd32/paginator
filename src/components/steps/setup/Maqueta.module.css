@@ -1,0 +1,349 @@
+.panel {
+  --gutter: 2.5rem;
+  --sheets-pad: var(--space-4);
+  --sheet-pad: var(--space-2);
+
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  background: var(--paper-sunken);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6) 0;
+}
+
+.titles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-3);
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-18);
+  font-stretch: var(--width-normal);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-title);
+}
+
+.source {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+}
+
+.headAside {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ink-2);
+  font-size: var(--text-13);
+  font-variant-numeric: tabular-nums;
+}
+
+.callout {
+  margin: var(--space-3) var(--space-6) 0;
+}
+
+.readings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin: var(--space-4) var(--space-6) 0;
+  border-block: 1px solid var(--rule-strong);
+}
+
+.reading {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.125rem;
+  min-width: 5.5rem;
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-3);
+  border-inline-start: 1px solid var(--rule);
+}
+
+.reading:first-child {
+  padding-inline-start: 0;
+  border-inline-start: 0;
+}
+
+.readingWide {
+  min-width: 9rem;
+}
+
+.readingValue {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--text-22);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-title);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.unit {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+  font-stretch: var(--width-normal);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
+}
+
+.readingLabel {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  letter-spacing: var(--tracking-dense);
+  white-space: nowrap;
+}
+
+.tick {
+  display: inline-block;
+  animation: tick var(--dur) var(--ease-out);
+}
+
+.canto {
+  display: grid;
+  grid-template-columns: var(--gutter) minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--space-2);
+  padding-block: var(--space-4) 0;
+  padding-inline: calc(var(--sheets-pad) + var(--sheet-pad)) var(--space-6);
+}
+
+.cantoLabel {
+  display: grid;
+  justify-items: end;
+  color: var(--ink);
+  font-size: var(--text-13);
+  font-weight: var(--weight-semibold);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.cantoCount {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-dense);
+}
+
+.canto .cantoStrip {
+  justify-content: flex-start;
+}
+
+.sheets {
+  --sheet-w: clamp(8rem, (100cqi - 2.25rem) / 4, 15rem);
+
+  container-type: inline-size;
+
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: var(--space-4) var(--space-6);
+  min-height: 0;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--sheets-pad) var(--space-4);
+  overflow: auto;
+  scrollbar-gutter: stable;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.sheets[aria-busy='true'] {
+  opacity: 0.55;
+}
+
+.group {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.groupHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-inline: var(--sheet-pad);
+  font-size: var(--text-12);
+}
+
+.groupPages {
+  color: var(--ink-2);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+}
+
+.grid > li {
+  flex: none;
+  width: var(--sheet-w);
+}
+
+.density-lg .grid {
+  gap: var(--space-2) var(--space-3);
+}
+
+.density-md {
+  --sheet-w: calc(clamp(8rem, (100cqi - 3.5rem) / 5, 10.5rem) * var(--wide, 1));
+}
+
+.density-sm {
+  --sheet-w: calc(8rem * var(--wide, 1));
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-6);
+  border-top: 1px solid var(--rule);
+  font-size: var(--text-13);
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.statusHint {
+  color: var(--ink-2);
+}
+
+.statusStrong {
+  font-weight: var(--weight-semibold);
+}
+
+.statusMuted {
+  color: var(--ink-2);
+}
+
+.statusError {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--error-ink);
+  font-weight: var(--weight-medium);
+}
+
+.statusArrow {
+  color: var(--ink-3);
+}
+
+.legend {
+  display: flex;
+  gap: var(--space-4);
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.legendError {
+  color: var(--error-ink);
+}
+
+.keyCourtesy,
+.keyMissing {
+  width: 0.75rem;
+  height: 1rem;
+  border: 1px dashed var(--rule-strong);
+  border-radius: 2px;
+}
+
+.keyMissing {
+  border-color: var(--error);
+  background: var(--error-soft);
+}
+
+@keyframes tick {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tick {
+    animation-name: fade;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1099px) {
+  .panel {
+    --gutter: 2.25rem;
+    --sheets-pad: var(--space-2);
+  }
+
+  .head,
+  .foot {
+    padding-inline: var(--space-4);
+  }
+
+  .readings,
+  .callout {
+    margin-inline: var(--space-4);
+  }
+
+  .canto {
+    padding-inline-end: var(--space-4);
+  }
+}
+
+@media (max-width: 899px) {
+  .panel {
+    height: auto;
+  }
+
+  .sheets {
+    flex: none;
+    max-height: 40rem;
+  }
+}

@@ -1,0 +1,8 @@
+.rejected {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.rejected li {
+  overflow-wrap: anywhere;
+}

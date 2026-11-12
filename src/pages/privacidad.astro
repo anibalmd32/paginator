@@ -1,0 +1,68 @@
+---
+import LegalDocument from '@/components/legal/LegalDocument.astro';
+
+const contact = import.meta.env.PUBLIC_CONTACT_EMAIL?.trim() || null;
+---
+
+<LegalDocument
+  title="Privacidad"
+  description="Qué datos usa Paginator: tus archivos no salen del navegador; con cuenta se guardan la configuración y el orden de páginas."
+  updated="12 de noviembre de 2026"
+>
+  <p>
+    Paginator verifica e impone revistas en tu navegador. Esta página explica qué datos usa y dónde quedan.
+  </p>
+
+  <h2>Tus archivos no salen de tu equipo</h2>
+  <p>
+    Los PDF e imágenes que cargas se leen y se procesan en tu navegador. <strong>No se suben a ningún servidor</strong>:
+    ni los archivos, ni sus miniaturas, ni el texto de sus páginas. Puedes usar Paginator sin cuenta.
+  </p>
+
+  <h2>Si entras con Google</h2>
+  <p>La cuenta es opcional y sirve para guardar revistas. Al entrar con Google recibimos de tu cuenta de Google:</p>
+  <ul>
+    <li>tu correo electrónico,</li>
+    <li>tu nombre y tu foto de perfil.</li>
+  </ul>
+  <p>No pedimos acceso a tus contactos, correos, archivos de Drive ni a ningún otro dato de Google.</p>
+
+  <h2>Qué se guarda de cada revista</h2>
+  <p>Cuando pulsas «Guardar», se almacena en tu cuenta:</p>
+  <ul>
+    <li>el título y la configuración del trabajo (encuadernación, formato, sangrado, dirección de lectura…),</li>
+    <li>el orden de las páginas,</li>
+    <li>el nombre, el tamaño y una huella (SHA-256) de cada archivo, para reconocerlo cuando lo vuelvas a cargar,</li>
+    <li>un resumen: número de páginas y pliegos y el resultado de la verificación.</li>
+  </ul>
+  <p>La huella es un código calculado a partir del archivo; no permite reconstruirlo ni ver su contenido.</p>
+
+  <h2>Dónde se guarda</h2>
+  <ul>
+    <li><strong>Supabase</strong> aloja la base de datos y gestiona el inicio de sesión.</li>
+    <li><strong>Netlify</strong> sirve las páginas del sitio y, como cualquier servidor web, registra datos técnicos de las visitas (dirección IP, navegador).</li>
+    <li><strong>Google</strong> verifica tu identidad cuando eliges entrar con Google.</li>
+  </ul>
+  <p>
+    Cada cuenta solo puede leer y modificar sus propias revistas. No vendemos ni cedemos tus datos, no mostramos
+    publicidad y no usamos herramientas de analítica ni de seguimiento.
+  </p>
+
+  <h2>En tu navegador</h2>
+  <p>
+    Paginator guarda en el almacenamiento local del navegador el tema elegido (claro u oscuro) y, si entras, la sesión.
+    No usa cookies de publicidad ni de terceros.
+  </p>
+
+  <h2>Tus derechos</h2>
+  <p>
+    Puedes borrar cualquier revista guardada desde «Mis revistas» en cualquier momento. Para borrar la cuenta entera,
+    consultar tus datos o corregirlos,
+    {contact ? (
+      <>escribe a <a href={`mailto:${contact}`}>{contact}</a>.</>
+    ) : (
+      <>ponte en contacto con el responsable del sitio.</>
+    )}
+    Al borrar la cuenta se eliminan con ella todas sus revistas.
+  </p>
+</LegalDocument>

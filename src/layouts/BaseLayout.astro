@@ -1,0 +1,36 @@
+---
+import '@fontsource-variable/archivo/standard.css';
+import '@/styles/tokens.css';
+import '@/styles/base.css';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2?url';
+import { THEME_BOOT_SCRIPT } from '@/lib/theme';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Paginator',
+  description = 'Verificación de paginación e imposición de revistas, con réplica 3D del ejemplar. Todo se procesa en el navegador.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#00474d" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#00363c" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="font" type="font/woff2" href={archivoLatin} crossorigin />
+    <script is:inline set:html={THEME_BOOT_SCRIPT} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

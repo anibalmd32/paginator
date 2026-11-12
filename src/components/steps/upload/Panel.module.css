@@ -1,0 +1,31 @@
+.panel {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--rule);
+}
+
+.panel:last-child {
+  border-bottom: 0;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-14);
+  font-weight: var(--weight-semibold);
+}
+
+.aside {
+  flex: none;
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+}

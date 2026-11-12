@@ -1,0 +1,48 @@
+.button {
+  --btn-bg: var(--bar-tab);
+  --btn-bg-hover: var(--bar-tab-hover);
+  --btn-bg-active: var(--bar-field);
+  --btn-fg: var(--on-bar);
+  --btn-border: var(--bar-rule);
+  --btn-border-hover: var(--on-bar-3);
+  --focus: var(--focus-on-bar);
+}
+
+.ghost {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--bar-tab);
+  --btn-bg-active: var(--bar-tab-hover);
+  --btn-fg: var(--on-bar);
+  --btn-border: transparent;
+  --btn-border-hover: transparent;
+  --focus: var(--focus-on-bar);
+}
+
+.button.button[aria-disabled='true']:not([data-loading]),
+.ghost.ghost[aria-disabled='true']:not([data-loading]) {
+  --btn-bg: transparent;
+  --btn-bg-hover: transparent;
+  --btn-bg-active: transparent;
+  --btn-fg: var(--on-bar-3);
+  --btn-border: var(--bar-rule);
+  --btn-border-hover: var(--bar-rule);
+}
+
+.ghost.ghost[aria-disabled='true']:not([data-loading]) {
+  --btn-border: transparent;
+  --btn-border-hover: transparent;
+}
+
+.settled {
+  --btn-bg: transparent;
+  --btn-border: transparent;
+  --btn-fg: var(--on-bar-2);
+}
+
+.settled svg {
+  color: var(--on-bar);
+}
+
+.figure {
+  font-variant-numeric: tabular-nums;
+}

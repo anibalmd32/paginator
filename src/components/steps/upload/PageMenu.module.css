@@ -1,0 +1,57 @@
+.menu {
+  display: grid;
+  gap: var(--space-3);
+  width: 15rem;
+}
+
+.move {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.move > button {
+  flex: none;
+  margin-top: calc(var(--text-13) * var(--leading-text) + var(--space-1));
+}
+
+.moveField {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.items {
+  display: grid;
+  gap: 1px;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--rule);
+}
+
+.item {
+  justify-content: flex-start;
+}
+
+.rule {
+  height: 1px;
+  margin: var(--space-1) 0;
+  background: var(--rule);
+}
+
+.reason,
+.hint {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  line-height: var(--leading-text);
+}
+
+.reason > svg {
+  flex: none;
+  margin-top: 0.125rem;
+}
+
+.hint {
+  display: block;
+}

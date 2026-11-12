@@ -1,0 +1,19 @@
+---
+import { ViewerLab } from '@/components/lab/ViewerLab';
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Laboratorio · visor 3D</title>
+    <style is:global>
+      html, body { margin: 0; height: 100%; font: 13px/1.4 system-ui, sans-serif; }
+      body { background: #cfcfcf; }
+      body.dark { background: #2f2f2f; color: #eee; }
+</style>
+  </head>
+  <body>
+    <ViewerLab client:only="react" />
+  </body>
+</html>

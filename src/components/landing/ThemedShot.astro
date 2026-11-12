@@ -1,0 +1,75 @@
+---
+interface Props {
+  name: string;
+  alt: string;
+  loading?: 'lazy' | 'eager';
+  sizes?: string;
+  crop?: { x: number; y: number; width: number; height: number };
+}
+
+const SHOT_W = 1440;
+const SHOT_H = 900;
+const { name, alt, loading = 'lazy', sizes, crop } = Astro.props;
+const cropStyle = crop
+  ? [
+      `--crop-ratio: ${String(crop.width)} / ${String(crop.height)}`,
+      `--crop-w: ${String((SHOT_W / crop.width) * 100)}%`,
+      `--crop-x: ${String((-crop.x / crop.width) * 100)}%`,
+      `--crop-y: ${String((-crop.y / crop.height) * 100)}%`,
+      `--crop-h: ${String((SHOT_H / crop.height) * 100)}%`,
+    ].join('; ')
+  : undefined;
+---
+
+<picture class:list={['themed', crop && 'cropped']} style={cropStyle}>
+  <source media="(prefers-color-scheme: dark)" srcset={`/landing/app/${name}-dark.png`} data-scheme-dark />
+  <img src={`/landing/app/${name}-light.png`} width="1440" height="900" alt={alt} loading={loading} decoding="async" sizes={sizes} />
+</picture>
+<script is:inline>
+  (function (script) {
+    var theme = document.documentElement.dataset.theme;
+    var media = theme === 'dark' ? 'all' : theme === 'light' ? 'not all' : null;
+    var picture = script && script.previousElementSibling;
+    var source = media && picture ? picture.querySelector('source[data-scheme-dark]') : null;
+    if (source) source.media = media;
+  })(document.currentScript);
+</script>
+
+<script>
+  const SYSTEM = '(prefers-color-scheme: dark)';
+  const sync = (): void => {
+    const theme = document.documentElement.dataset['theme'];
+    const media = theme === 'dark' ? 'all' : theme === 'light' ? 'not all' : SYSTEM;
+    for (const source of document.querySelectorAll<HTMLSourceElement>('source[data-scheme-dark]')) {
+      if (source.media !== media) source.media = media;
+    }
+  };
+  sync();
+  new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>
+
+<style>
+  .themed {
+    display: block;
+  }
+
+  .themed img {
+    width: 100%;
+    height: auto;
+  }
+
+  .cropped {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: var(--crop-ratio);
+  }
+
+  .cropped img {
+    position: absolute;
+    top: var(--crop-y);
+    left: var(--crop-x);
+    width: var(--crop-w);
+    max-width: none;
+    height: var(--crop-h);
+  }
+</style>

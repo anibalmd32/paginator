@@ -1,0 +1,72 @@
+.scroller {
+  --card-pad: var(--space-2);
+
+  position: relative;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-4) calc(var(--space-6) - var(--card-pad)) var(--space-8);
+  scrollbar-gutter: stable;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, calc(2 * (var(--page-w) + var(--card-pad))));
+  justify-content: start;
+  gap: var(--space-4) var(--space-6);
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.spread {
+  direction: ltr;
+}
+
+.pair {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.pair::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: calc(var(--card-pad) - 2px);
+  background: var(--ink-3);
+  pointer-events: none;
+}
+
+.ghost {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-popover);
+  display: inline-flex;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--inverse);
+  color: var(--on-inverse);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.ghostTarget {
+  color: var(--on-inverse-2);
+  font-weight: var(--weight-regular);
+}
+
+@media (max-width: 1199px) {
+  .scroller {
+    padding-inline: calc(var(--space-4) - var(--card-pad));
+  }
+}

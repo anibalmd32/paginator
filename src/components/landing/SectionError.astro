@@ -1,0 +1,109 @@
+---
+import { folioOf } from './sections';
+import ThemedShot from './ThemedShot.astro';
+---
+
+<section class="l-section region" id="error" data-canto-region="error" aria-labelledby="error-titulo">
+  <header class="l-opener">
+    <div class="l-opener__head">
+      <span class="l-folio l-opener__folio" aria-hidden="true">{folioOf('error')}</span>
+      <h2 class="l-title" id="error-titulo">El error, en su pliego</h2>
+      <p class="l-lede l-opener__dek">
+        Una página fuera de sitio no se ve en un PDF: se ve en el pliego. La matriz te dice cuál, por qué y cómo
+        arreglarlo, antes de filmar planchas.
+      </p>
+    </div>
+  </header>
+
+  <div class="body">
+    <figure class="l-shot shot">
+      <div class="l-shot__frame">
+        <ThemedShot
+          name="pliegos-error"
+          alt="Matriz de pliegos de Paginator con «Canto»: el pliego 3 aparece resaltado con el aviso «La página 5 lleva el folio 9»; a la izquierda, el canto con banderitas en los pliegos 3 y 5; a la derecha, el pre-vuelo con dos avisos por resolver y los botones para descargar el reporte, en JSON o para imprimir."
+          sizes="(max-width: 1023px) 100vw, 62vw"
+        />
+      </div>
+      <figcaption class="l-caption">
+        <b>Pliegos.</b> Dos páginas intercambiadas en la revista de ejemplo: la 5 y la 9. Cada pliego muestra su cara y su
+        retiro, y el aviso cae en el pliego donde ocurre, con su causa y su arreglo.
+      </figcaption>
+    </figure>
+
+    <div class="aside">
+      <figure class="l-shot detail">
+        <div class="l-shot__frame">
+          <ThemedShot
+            name="pliegos-error"
+            crop={{ x: 1090, y: 255, width: 345, height: 225 }}
+            alt="Detalle del pre-vuelo: aviso «La página 5 lleva el folio 9». El resto de folios coincide con su posición, así que en esa posición se esperaba el folio 5; comprueba si la página está fuera de sitio o si el folio del archivo es incorrecto, y reordénala."
+          />
+        </div>
+        <figcaption class="l-caption">
+          <b>El aviso, a tamaño de lectura.</b> Dice qué pasa, por qué lo cree y qué hacer.
+        </figcaption>
+      </figure>
+
+      <ul class="l-notes">
+        <li>
+          <h3>Folios fuera de orden</h3>
+          <p>
+            Lee el folio impreso en la capa de texto del PDF (en imágenes, el número del nombre de archivo) y lo compara con
+            la posición real: «La página 5 lleva el folio 9».
+          </p>
+        </li>
+        <li>
+          <h3>Cortesías para cerrar el pliego</h3>
+          <p>
+            Si el total no es múltiplo de cuatro, añade las páginas en blanco que faltan, antes de la contraportada o al
+            final, y te lo dice.
+          </p>
+        </li>
+        <li>
+          <h3>Lado del lomo</h3>
+          <p>Avisa cuando una mitad de pliego cae al lado contrario del lomo, o cuando un pliego doble aparece entre páginas sueltas.</p>
+        </li>
+        <li>
+          <h3>Reporte de pre-vuelo</h3>
+          <p>
+            Páginas, orden final de pliegos, lomo estimado e incidencias, para descargar, en JSON o impreso, junto al archivo
+            que mandas a la imprenta.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .region {
+    margin-top: var(--l-section-gap);
+    padding-block: var(--space-16);
+    background: var(--paper-sunken);
+  }
+
+  .region :global(.l-shot__frame) {
+    background: var(--paper);
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 21rem);
+    gap: var(--space-12);
+    align-items: start;
+    margin-top: var(--space-12);
+    padding-inline: var(--l-gutter);
+  }
+
+  .aside {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 1023px) {
+    .body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-10);
+    }
+  }
+</style>

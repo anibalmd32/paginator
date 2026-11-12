@@ -1,0 +1,30 @@
+.steps {
+  position: relative;
+  display: grid;
+  height: 100%;
+  min-height: 0;
+}
+
+.steps > * {
+  grid-area: 1 / 1;
+  min-height: 0;
+}
+
+.viewer {
+  display: grid;
+  min-height: 0;
+}
+
+.viewer[hidden] {
+  display: none;
+}
+
+.account {
+  display: contents;
+}
+
+@media (max-width: 599px) {
+  .account {
+    display: none;
+  }
+}

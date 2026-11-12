@@ -1,0 +1,100 @@
+.root {
+  --progress-color: var(--petrol);
+
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.success {
+  --progress-color: var(--success);
+}
+
+.warning {
+  --progress-color: var(--warning);
+}
+
+.error {
+  --progress-color: var(--error);
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-13);
+}
+
+.label {
+  min-width: 0;
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+.value {
+  flex: none;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  position: relative;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--radius-round);
+  background: var(--rule);
+}
+
+.sm .track {
+  height: 4px;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--progress-color);
+  transform: scaleX(var(--progress));
+  transform-origin: left center;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+:dir(rtl) .fill {
+  transform-origin: right center;
+}
+
+.track[data-indeterminate] .fill {
+  width: 34%;
+  inset-inline-end: auto;
+  transform: none;
+  animation: progress-sweep 1.3s var(--ease-out) infinite;
+}
+
+@keyframes progress-sweep {
+  from {
+    translate: -100% 0;
+  }
+
+  to {
+    translate: 300% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+
+  .track[data-indeterminate] .fill {
+    width: 100%;
+    translate: none;
+    animation: progress-pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes progress-pulse {
+    50% {
+      opacity: 0.4;
+    }
+  }
+}

@@ -1,0 +1,71 @@
+.list {
+  display: grid;
+  max-height: 12.375rem;
+  overflow: auto;
+  border-top: 1px solid var(--rule);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.kind {
+  color: var(--ink-2);
+}
+
+.text {
+  display: grid;
+  min-width: 0;
+}
+
+.name {
+  overflow: hidden;
+  font-size: var(--text-13);
+  font-weight: var(--weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+.clear {
+  margin-inline-start: auto;
+}
+
+.confirm {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--error-rule);
+  border-radius: var(--radius-md);
+  background: var(--error-soft);
+}
+
+.question {
+  color: var(--error-ink);
+  font-size: var(--text-13);
+  font-weight: var(--weight-medium);
+}
+
+.confirm .actions {
+  justify-content: flex-end;
+}

@@ -1,0 +1,32 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  min-height: calc(var(--control-h-sm) + var(--space-2));
+}
+
+.bar {
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-sunken);
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.separator {
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 1.25rem;
+  margin: 0 var(--space-1);
+  background: var(--rule-strong);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

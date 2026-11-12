@@ -1,0 +1,177 @@
+.unit {
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+  background: var(--page-paper);
+  outline: 1px solid var(--rule);
+  outline-offset: -1px;
+  isolation: isolate;
+}
+
+.unit[data-status='loading'] {
+  background: var(--paper-sunken);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.unitNote {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--page-ink-muted);
+  font-size: var(--text-12);
+}
+
+.dim {
+  position: absolute;
+  background: var(--paper);
+  opacity: 0.72;
+}
+
+.boxes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.source,
+.bleed,
+.trim,
+.safe {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.source {
+  border: 2px solid var(--petrol);
+}
+
+.bleed {
+  border: 1px solid var(--guide-bleed);
+}
+
+.trim {
+  border: 1px solid var(--guide-trim);
+}
+
+.safe {
+  border: 1px dashed var(--guide-safe);
+}
+
+.blank {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-height: 22rem;
+  border: 1px dashed var(--rule-strong);
+  background: var(--page-paper);
+  color: var(--page-ink-muted);
+  font-size: var(--text-13);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.key {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.625rem;
+  border: 1.5px solid;
+  border-radius: 1px;
+}
+
+.keySource {
+  border-width: 2px;
+  border-color: var(--petrol);
+}
+
+.keyBleed {
+  border-color: var(--guide-bleed);
+}
+
+.keyTrim {
+  border-color: var(--guide-trim);
+}
+
+.keySafe {
+  border-color: var(--guide-safe);
+  border-style: dashed;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  font-size: var(--text-13);
+}
+
+.facts dt {
+  color: var(--ink-2);
+}
+
+.facts dd {
+  display: grid;
+  min-width: 0;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.file {
+  overflow: hidden;
+  font-weight: var(--weight-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sub {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.issues {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.issue {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+}
+
+.issueTitle {
+  font-size: var(--text-13);
+  font-weight: var(--weight-semibold);
+}
+
+.issueDetail {
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.fix {
+  margin-top: var(--space-1);
+}
+
+.clean {
+  display: flex;
+}

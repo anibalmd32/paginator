@@ -1,0 +1,95 @@
+.callout {
+  --tone-soft: var(--info-soft);
+  --tone-rule: var(--info-rule);
+  --tone-icon: var(--info);
+  --tone-ink: var(--info-ink);
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--tone-rule);
+  border-radius: var(--radius-lg);
+  background: var(--tone-soft);
+  color: var(--ink);
+  font-size: var(--text-13);
+  line-height: var(--leading-text);
+}
+
+.warning {
+  --tone-soft: var(--warning-soft);
+  --tone-rule: var(--warning-rule);
+  --tone-icon: var(--warning);
+  --tone-ink: var(--warning-ink);
+}
+
+.error {
+  --tone-soft: var(--error-soft);
+  --tone-rule: var(--error-rule);
+  --tone-icon: var(--error);
+  --tone-ink: var(--error-ink);
+}
+
+.success {
+  --tone-soft: var(--success-soft);
+  --tone-rule: var(--success-rule);
+  --tone-icon: var(--success);
+  --tone-ink: var(--success-ink);
+}
+
+.icon {
+  margin-top: 0.125rem;
+  color: var(--tone-icon);
+}
+
+.content {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.title {
+  color: var(--tone-ink);
+  font-size: var(--text-14);
+  font-weight: var(--weight-semibold);
+  line-height: 1.35;
+}
+
+.body {
+  max-width: 72ch;
+  color: var(--ink);
+}
+
+.body > p + p {
+  margin-top: var(--space-1);
+}
+
+.action {
+  display: flex;
+  flex: none;
+  align-self: center;
+  gap: var(--space-2);
+}
+
+.dismiss {
+  flex: none;
+  margin: -0.25rem -0.25rem -0.25rem 0;
+}
+
+.compact {
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+}
+
+.compact .icon {
+  margin-top: 0;
+}
+
+.compact .content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-2);
+}

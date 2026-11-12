@@ -1,0 +1,58 @@
+.diagram {
+  display: block;
+  overflow: visible;
+}
+
+.sheet {
+  fill: var(--paper-raised);
+  stroke: currentColor;
+  stroke-width: 1.25;
+}
+
+.fold {
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+
+.label {
+  fill: currentColor;
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-semibold);
+  text-anchor: middle;
+}
+
+.leaf {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+}
+
+.cover {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linejoin: round;
+}
+
+.spine {
+  stroke: currentColor;
+  stroke-width: 3;
+}
+
+.staple {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.stapleLegs {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+}

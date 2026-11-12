@@ -1,0 +1,148 @@
+.header {
+  position: relative;
+  z-index: var(--z-header);
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-6);
+  height: var(--header-h);
+  padding-inline: var(--space-4);
+  background: var(--bar);
+  color: var(--on-bar);
+  --focus: var(--focus-on-bar);
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.brand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-sm);
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--focus-on-bar);
+  outline-offset: 2px;
+}
+
+.mark {
+  fill: var(--on-bar);
+}
+
+.markCover {
+  fill: var(--stock-2);
+}
+
+.brandName {
+  font-size: var(--text-16);
+  font-stretch: var(--width-expanded);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-title);
+  line-height: 1;
+}
+
+.divider {
+  flex: none;
+  width: 1px;
+  height: 1.25rem;
+  background: var(--bar-rule);
+}
+
+.titleBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  cursor: text;
+}
+
+.title {
+  min-width: 6rem;
+  max-width: 18rem;
+  height: var(--control-h-sm);
+  padding: 0 1.5rem 0 var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--on-bar);
+  font-size: var(--text-14);
+  font-weight: var(--weight-medium);
+  text-overflow: ellipsis;
+  caret-color: var(--on-bar);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.title::placeholder {
+  color: var(--on-bar-2);
+}
+
+.title::selection {
+  background: var(--on-bar);
+  color: var(--bar);
+}
+
+.titleBox:hover .title {
+  border-color: var(--bar-rule);
+}
+
+.title:focus {
+  border-color: var(--on-bar-3);
+  background: var(--bar-field);
+}
+
+.title:focus-visible {
+  outline: 2px solid var(--focus-on-bar);
+  outline-offset: 1px;
+}
+
+.pencil {
+  position: absolute;
+  inset-inline-end: var(--space-2);
+  color: var(--on-bar-2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.titleBox:hover .pencil,
+.title:focus + .pencil {
+  opacity: 1;
+}
+
+.steps {
+  justify-self: start;
+}
+
+.end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+@media (max-width: 1279px) {
+  .header {
+    column-gap: var(--space-4);
+    padding-inline: var(--space-3);
+  }
+
+  .title {
+    max-width: 12rem;
+  }
+}
+
+@media (max-width: 1099px) {
+  .brandName {
+    display: none;
+  }
+}

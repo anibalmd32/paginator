@@ -1,0 +1,229 @@
+.detail {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--petrol-rule);
+  border-radius: var(--radius-lg);
+  background: var(--paper-raised);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.title {
+  font-size: var(--text-16);
+  font-weight: var(--weight-semibold);
+}
+
+.titleNumber {
+  font-size: var(--text-22);
+  font-stretch: var(--width-condensed);
+  font-weight: var(--weight-heavy);
+  font-variant-numeric: tabular-nums;
+}
+
+.slotText {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+  font-stretch: var(--width-condensed);
+}
+
+.close {
+  margin-inline-start: auto;
+  align-self: center;
+}
+
+.preview {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+.previewPaper {
+  display: grid;
+  place-items: center;
+  align-self: start;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: var(--stage);
+}
+
+.previewPaper > * {
+  width: clamp(5.5rem, 40cqi, 7.5rem);
+}
+
+.guides {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
+}
+
+.guides > button {
+  justify-content: flex-start;
+}
+
+.swatchTrim,
+.swatchBleed,
+.swatchSafe {
+  display: inline-block;
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1px solid var(--guide-trim);
+  border-radius: 1px;
+}
+
+.swatchBleed {
+  border-color: var(--guide-bleed);
+}
+
+.swatchSafe {
+  border-style: dashed;
+  border-color: var(--guide-safe);
+}
+
+.facts {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  font-size: var(--text-13);
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.fact dt {
+  color: var(--ink-2);
+}
+
+.fact dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.letter {
+  display: inline-grid;
+  place-items: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-inline-start: var(--space-1);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-12);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  vertical-align: 1px;
+}
+
+.link {
+  color: var(--petrol-ink);
+  font-weight: var(--weight-medium);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.mismatch {
+  color: var(--warning-ink);
+  font-weight: var(--weight-semibold);
+}
+
+.muted {
+  color: var(--ink-2);
+}
+
+.issues {
+  display: grid;
+  gap: var(--space-1);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.issue {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: start;
+  color: var(--tone-ink);
+  font-size: var(--text-13);
+  font-weight: var(--weight-semibold);
+  line-height: 1.35;
+}
+
+.issueIcon {
+  margin-top: 0.125rem;
+  color: var(--tone-icon);
+}
+
+.tone-error {
+  --tone-soft: var(--error-soft);
+  --tone-rule: var(--error-rule);
+  --tone-icon: var(--error);
+  --tone-ink: var(--error-ink);
+}
+
+.tone-warning {
+  --tone-soft: var(--warning-soft);
+  --tone-rule: var(--warning-rule);
+  --tone-icon: var(--warning);
+  --tone-ink: var(--warning-ink);
+}
+
+.tone-info {
+  --tone-soft: var(--info-soft);
+  --tone-rule: var(--info-rule);
+  --tone-icon: var(--info);
+  --tone-ink: var(--info-ink);
+}
+
+.previewSide {
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.actions > button,
+.actions > span > button {
+  justify-content: flex-start;
+}
+
+.swap {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.swapRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swapBox {
+  flex: 0 1 6.5rem;
+}
+
+.swapRow > button {
+  flex: none;
+}

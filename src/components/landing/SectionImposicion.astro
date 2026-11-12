@@ -1,0 +1,105 @@
+---
+import { ImpositionPlayground } from './ImpositionPlayground';
+import { folioOf } from './sections';
+---
+
+<section class="l-section" id="imposicion" data-canto-region="imposicion" aria-labelledby="imposicion-titulo">
+  <header class="l-opener">
+    <div class="l-opener__head">
+      <span class="l-folio l-opener__folio" aria-hidden="true">{folioOf('imposicion')}</span>
+      <h2 class="l-title" id="imposicion-titulo">La imposición, sin misterio</h2>
+      <p class="l-lede l-opener__dek">
+        Una revista no se imprime página a página: se imprime en pliegos de cuatro, que luego se doblan, se encartan y se
+        cortan. Paginator calcula dónde cae cada una. Cambia los parámetros y mira cómo se reimponen.
+      </p>
+    </div>
+  </header>
+
+  <div class="body">
+    <ul class="l-notes notes">
+      <li>
+        <h3>Cara y retiro</h3>
+        <p>
+          Cada pliego lleva dos páginas por cada lado. En una grapada de 24 páginas, el pliego exterior lleva la 24 y la 1
+          en la cara, y la 2 y la 23 en el retiro.
+        </p>
+      </li>
+      <li>
+        <h3>En espejo respecto al lomo</h3>
+        <p>
+          El folio va siempre hacia el corte exterior de su página. Con lectura de derecha a izquierda el sistema entero se
+          invierte, y la maqueta también.
+        </p>
+      </li>
+      <li>
+        <h3>Grapada o lomo cuadrado</h3>
+        <p>
+          A caballo, todos los pliegos se encartan uno dentro de otro. En lomo cuadrado se alzan cuadernillos de 16 páginas
+          y la cubierta va aparte; cada cuadernillo tiene su papel en el canto.
+        </p>
+      </li>
+      <li>
+        <h3>El cálculo de verdad</h3>
+        <p>
+          Es la misma función que usa la aplicación, no una ilustración: los números que ves aquí son los que verás en tu
+          matriz de pliegos.
+        </p>
+      </li>
+    </ul>
+
+    <div class="playCell">
+      <ImpositionPlayground client:visible />
+    </div>
+  </div>
+</section>
+
+<style>
+  .body {
+    display: grid;
+    grid-template-columns: minmax(16rem, 21rem) minmax(0, 1fr);
+    gap: var(--space-16);
+    align-items: start;
+    margin-top: var(--space-12);
+    padding-inline: var(--l-gutter);
+  }
+
+  .notes {
+    order: 1;
+  }
+
+  .playCell {
+    order: 2;
+    min-width: 0;
+  }
+
+  @media (max-width: 1023px) {
+    .body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-10);
+    }
+
+    .notes {
+      order: 2;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-8);
+    }
+
+    .notes > li:nth-last-child(2) {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .playCell {
+      order: 1;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .notes {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .notes > li:nth-last-child(2) {
+      border-bottom: 0;
+    }
+  }
+</style>

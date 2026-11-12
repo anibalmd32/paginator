@@ -1,0 +1,36 @@
+.spinner {
+  display: inline-flex;
+  flex: none;
+  color: inherit;
+}
+
+.spinner svg {
+  animation: spinner-turn 0.8s linear infinite;
+}
+
+.track {
+  stroke: currentColor;
+  opacity: 0.25;
+}
+
+.arc {
+  stroke: currentColor;
+}
+
+@keyframes spinner-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner svg {
+    animation: spinner-pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes spinner-pulse {
+    50% {
+      opacity: 0.45;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+.toolbar {
+  min-width: 0;
+}
+
+.guides {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.groupLabel {
+  margin-inline-end: var(--space-1);
+  color: var(--ink-2);
+  font-size: var(--text-12);
+}
+
+.swatch {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 1.5px solid currentColor;
+  border-radius: 1px;
+}
+
+.swatchTrim {
+  border-color: var(--guide-trim);
+}
+
+.swatchBleed {
+  border-color: var(--guide-bleed);
+}
+
+.swatchSafe {
+  border-color: var(--guide-safe);
+  border-style: dashed;
+}
+
+.reset {
+  flex: none;
+}
+
+@container carga-cabecera (width < 50rem) and (width >= 40rem) {
+  .groupLabel {
+    display: none;
+  }
+
+  .toolbar .reset {
+    gap: 0;
+    width: var(--control-h-sm);
+    padding: 0;
+  }
+
+  .resetLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,38 @@
+.key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.3125rem;
+  border: 1px solid var(--rule-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+  background: var(--paper-raised);
+  color: var(--ink-2);
+  font-family: inherit;
+  font-size: var(--text-12);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.inverse {
+  border-color: var(--on-inverse-2);
+  background: transparent;
+  color: var(--on-inverse);
+}
+
+.combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1875rem;
+  font: inherit;
+  vertical-align: middle;
+}
+
+.plus {
+  font-size: var(--text-12);
+  opacity: 0.8;
+}

@@ -1,0 +1,29 @@
+.summary {
+  display: grid;
+  gap: var(--space-3);
+  width: min(22.5rem, calc(100vw - 2.5rem));
+}
+
+.hint {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+}
+
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.moreText {
+  color: var(--ink-2);
+  font-size: var(--text-13);
+  font-variant-numeric: tabular-nums;
+}
+
+.exportBlock {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}

@@ -1,0 +1,226 @@
+---
+import { IngestLab } from '@/components/lab/IngestLab';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Laboratorio · Ingesta — Paginator</title>
+    <style is:global>
+      :root {
+        color-scheme: light dark;
+        --bg: #f4f2ee;
+        --panel: #ffffff;
+        --ink: #1d1c1a;
+        --muted: #66625b;
+        --line: #d9d5cc;
+        --accent: #b3261e;
+        --ok: #1f6f43;
+        --warn: #8a5a00;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #171615;
+          --panel: #211f1d;
+          --ink: #ece9e3;
+          --muted: #a39e94;
+          --line: #3a3733;
+          --accent: #ff8a80;
+          --ok: #7fd3a2;
+          --warn: #f0c060;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          14px/1.45 system-ui,
+          -apple-system,
+          'Segoe UI',
+          sans-serif;
+      }
+      .lab {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px 24px 64px;
+      }
+      .lab h1 {
+        margin: 0 0 4px;
+        font-size: 20px;
+      }
+      .lab h2 {
+        margin: 0 0 10px;
+        font-size: 15px;
+      }
+      .lab p {
+        margin: 0 0 8px;
+      }
+      .lab .muted {
+        color: var(--muted);
+      }
+      .lab section {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+      .lab .drop {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        padding: 22px 16px;
+        border: 2px dashed var(--line);
+        border-radius: 8px;
+        background: transparent;
+      }
+      .lab .drop[data-over='true'] {
+        border-color: var(--accent);
+      }
+      .lab .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .lab button,
+      .lab select,
+      .lab input[type='file'] {
+        font: inherit;
+        color: inherit;
+      }
+      .lab button,
+      .lab select {
+        padding: 5px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--bg);
+        cursor: pointer;
+      }
+      .lab button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .lab button[aria-pressed='true'] {
+        border-color: var(--ink);
+        font-weight: 600;
+      }
+      .lab .stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        font-variant-numeric: tabular-nums;
+      }
+      .lab .stats b {
+        font-weight: 600;
+      }
+      .lab .error {
+        color: var(--accent);
+      }
+      .lab .ok {
+        color: var(--ok);
+      }
+      .lab ul {
+        margin: 4px 0 0;
+        padding-left: 18px;
+      }
+      .lab .table-wrap {
+        max-height: 420px;
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+      }
+      .lab table {
+        width: 100%;
+        border-collapse: collapse;
+        font-variant-numeric: tabular-nums;
+      }
+      .lab th,
+      .lab td {
+        padding: 4px 10px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        white-space: nowrap;
+      }
+      .lab th {
+        position: sticky;
+        top: 0;
+        background: var(--panel);
+        font-weight: 600;
+      }
+      .lab tr[data-selected='true'] td {
+        background: color-mix(in srgb, var(--accent) 12%, transparent);
+      }
+      .lab .thumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .lab figure {
+        margin: 0;
+        text-align: center;
+      }
+      .lab figure .pair {
+        display: flex;
+        gap: 3px;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .lab figure img,
+      .lab figure .placeholder {
+        display: block;
+        height: 150px;
+        width: auto;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .lab figure .placeholder {
+        width: 100px;
+        background: var(--bg);
+      }
+      .lab figcaption {
+        margin-top: 4px;
+        max-width: 220px;
+        overflow: hidden;
+        color: var(--muted);
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .lab .stage {
+        margin-top: 12px;
+        overflow: auto;
+        max-height: 80vh;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background:
+          repeating-conic-gradient(color-mix(in srgb, var(--line) 60%, transparent) 0% 25%, transparent 0% 50%) 50% / 20px
+          20px;
+      }
+      .lab .stage .canvases {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        padding: 12px;
+        width: max-content;
+      }
+      .lab .stage canvas {
+        display: block;
+        max-height: 70vh;
+        width: auto;
+        box-shadow: 0 0 0 1px var(--line);
+      }
+</style>
+  </head>
+  <body>
+    <IngestLab client:only="react" />
+  </body>
+</html>

@@ -1,0 +1,119 @@
+.layout {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--rule);
+}
+
+.titles {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-22);
+  font-stretch: var(--width-expanded);
+  font-weight: var(--weight-heavy);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-title);
+}
+
+.guide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-2);
+  color: var(--ink-2);
+  font-size: var(--text-14);
+  font-stretch: var(--width-condensed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-dense);
+}
+
+.fragment {
+  white-space: nowrap;
+}
+
+.dot {
+  color: var(--ink-3);
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.body {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--space-6);
+  scrollbar-gutter: stable;
+}
+
+.flush {
+  padding: 0;
+  overflow: hidden;
+  scrollbar-gutter: auto;
+}
+
+.measure {
+  margin-inline: auto;
+}
+
+.foot {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--footer-h);
+  padding: var(--space-2) var(--space-6);
+  border-top: 1px solid var(--rule);
+  background: var(--paper-sunken);
+}
+
+.footStart,
+.footEnd {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.footNote {
+  min-width: 0;
+  color: var(--ink-2);
+  font-size: var(--text-13);
+  text-align: end;
+}
+
+@media (max-width: 1099px) {
+  .head {
+    padding-inline: var(--space-4);
+  }
+
+  .body {
+    padding: var(--space-4);
+  }
+
+  .flush {
+    padding: 0;
+  }
+
+  .foot {
+    padding-inline: var(--space-4);
+  }
+}
