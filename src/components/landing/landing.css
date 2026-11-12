@@ -1,7 +1,7 @@
 html:has(body.landing) {
   height: auto;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--l-bar-h) + var(--space-4));
+  scroll-padding-top: var(--l-bar-h, 3.5rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -18,69 +18,96 @@ body.landing {
   font-size: var(--text-16);
 }
 
+:root:has(body.landing),
 .landing {
   --l-bar-h: 3.5rem;
-  --l-canto-w: 3.5rem;
   --l-gutter: 3rem;
   --l-measure: 36rem;
-  --l-section-gap: 8rem;
   --l-display: 4.5rem;
   --l-title: 2.75rem;
-  --l-folio: 3.5rem;
+  --l-statement: 1.75rem;
+  --l-fig: 1rem;
 }
 
 @media (max-width: 1439px) {
+  :root:has(body.landing),
   .landing {
     --l-display: 4rem;
+  }
+}
+
+@media (min-width: 1280px) and (min-height: 760px) {
+  :root:has(body.landing),
+  .landing {
+    --l-fig: 1.125rem;
+  }
+}
+
+@media (min-width: 1440px) and (min-height: 860px) {
+  :root:has(body.landing),
+  .landing {
+    --l-fig: 1.25rem;
+  }
+}
+
+@media (min-width: 1800px) and (min-height: 1000px) {
+  :root:has(body.landing),
+  .landing {
+    --l-fig: 1.5rem;
+  }
+}
+
+@media (min-width: 2400px) and (min-height: 1300px) {
+  :root:has(body.landing),
+  .landing {
+    --l-fig: 1.875rem;
   }
 }
 
 @media (max-width: 1279px) {
+  :root:has(body.landing),
   .landing {
     --l-gutter: 2.5rem;
-    --l-display: 4rem;
     --l-title: 2.375rem;
-    --l-folio: 3rem;
-    --l-section-gap: 7rem;
+    --l-statement: 1.5rem;
+    --l-fig: 0.875rem;
   }
 }
 
 @media (max-width: 1199px) {
+  :root:has(body.landing),
   .landing {
     --l-display: 3.25rem;
   }
 }
 
 @media (max-width: 1023px) {
+  :root:has(body.landing),
   .landing {
-    --l-canto-w: 3rem;
     --l-gutter: 2rem;
     --l-display: 3.5rem;
     --l-title: 2.125rem;
-    --l-folio: 2.75rem;
-    --l-section-gap: 6rem;
+    --l-fig: 1.125rem;
   }
 }
 
 @media (max-width: 767px) {
+  :root:has(body.landing),
   .landing {
-    --l-canto-w: 0px;
     --l-gutter: 1.25rem;
     --l-display: 2.625rem;
     --l-title: 1.875rem;
-    --l-folio: 2.25rem;
-    --l-section-gap: 5rem;
+    --l-statement: 1.375rem;
+    --l-fig: 0.6875rem;
   }
 }
 
 @media (max-width: 379px) {
+  :root:has(body.landing),
   .landing {
     --l-display: 2.375rem;
+    --l-fig: 0.625rem;
   }
-}
-
-.l-page {
-  padding-inline-end: var(--l-canto-w);
 }
 
 .l-action {
@@ -139,6 +166,31 @@ body.landing {
   font-weight: var(--weight-semibold);
 }
 
+.l-action--on-bar {
+  --a-bg: transparent;
+  --a-bg-hover: var(--bar-tab);
+  --a-bg-active: var(--bar-tab-hover);
+  --a-fg: var(--on-bar);
+  --a-border: var(--on-bar-3);
+  --a-border-hover: var(--on-bar-2);
+}
+
+.l-action--on-bar-primary {
+  --a-bg: var(--on-bar);
+  --a-bg-hover: var(--on-bar-2);
+  --a-bg-active: var(--on-bar-3);
+  --a-fg: var(--bar);
+  --a-border: transparent;
+  --a-border-hover: transparent;
+
+  font-weight: var(--weight-semibold);
+}
+
+.l-action--on-bar:focus-visible,
+.l-action--on-bar-primary:focus-visible {
+  outline-color: var(--focus-on-bar);
+}
+
 .l-action--sm {
   height: var(--control-h);
   padding: 0 var(--space-3);
@@ -149,12 +201,6 @@ body.landing {
 .l-action--sm svg {
   width: 1rem;
   height: 1rem;
-}
-
-.l-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
 }
 
 .l-display {
@@ -175,14 +221,6 @@ body.landing {
   text-wrap: balance;
 }
 
-.l-folio {
-  font-stretch: var(--width-condensed);
-  font-variant-numeric: tabular-nums;
-  font-weight: var(--weight-heavy);
-  letter-spacing: var(--tracking-dense);
-  line-height: 0.9;
-}
-
 .l-lede {
   max-width: var(--l-measure);
   color: var(--ink-2);
@@ -190,116 +228,41 @@ body.landing {
   line-height: 1.5;
 }
 
-.l-body {
-  max-width: var(--l-measure);
-  color: var(--ink-2);
-  font-size: var(--text-16);
-  line-height: 1.6;
+.l-fig {
+  font-size: var(--l-fig);
 }
 
-.l-body strong {
-  color: var(--ink);
-  font-weight: var(--weight-semibold);
-}
-
-.l-section {
-  position: relative;
-  padding-block: var(--l-section-gap) 0;
-  scroll-margin-top: calc(var(--l-bar-h) + var(--space-4));
-}
-
-.l-opener {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-5);
-  padding-inline: var(--l-gutter);
-}
-
-.l-opener__head {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: start;
-  column-gap: var(--space-6);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--ink);
-}
-
-.l-opener__folio {
-  min-width: 2ch;
-  color: var(--petrol-ink);
-  font-size: var(--l-folio);
-}
-
-.l-opener__dek {
-  grid-column: 2;
-  margin-top: var(--space-4);
-}
-
-@media (max-width: 767px) {
-  .l-opener__head {
-    column-gap: var(--space-4);
-  }
-
-  .l-opener__dek {
-    grid-column: 1 / -1;
-  }
-}
-
-.l-notes {
-  display: grid;
-  gap: 0;
-}
-
-.l-notes > li {
-  display: grid;
-  gap: var(--space-1);
-  padding-block: var(--space-4);
-  border-top: 1px solid var(--rule);
-}
-
-.l-notes > li:last-child {
-  border-bottom: 1px solid var(--rule);
-}
-
-.l-notes h3 {
-  color: var(--ink);
-  font-size: var(--text-16);
-  font-stretch: var(--width-normal);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-title);
-}
-
-.l-notes p {
-  color: var(--ink-2);
-  font-size: var(--text-14);
-  line-height: 1.55;
-}
-
-.l-shot {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.l-shot__frame {
-  overflow: hidden;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-lg);
-  background: var(--paper-sunken);
-}
-
-.l-shot__frame img {
+.l-fig img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
-.l-caption {
-  max-width: 44rem;
-  color: var(--ink-2);
-  font-size: var(--text-13);
-  line-height: 1.45;
+@keyframes l-settle {
+  from {
+    opacity: 0;
+    translate: 0 0.75em;
+  }
 }
 
-.l-caption b {
-  color: var(--ink);
-  font-weight: var(--weight-semibold);
+@keyframes l-appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes l-grow-y {
+  from {
+    scale: 1 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .l-play {
+      animation: var(--play, l-settle) 1ms var(--ease, cubic-bezier(0.2, 0.7, 0.2, 1)) both;
+      animation-timeline: var(--tl);
+      animation-range: entry var(--from, 0%) entry var(--to, 100%);
+    }
+  }
 }

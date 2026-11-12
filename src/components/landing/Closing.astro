@@ -1,21 +1,18 @@
 ---
+import { ThemeToggle } from '@/components/shell/ThemeToggle';
+
 const year = new Date().getFullYear();
 ---
 
-<section class="closing" id="cierre" data-canto-region="cierre" aria-labelledby="cierre-titulo">
+<section class="closing" aria-labelledby="cierre-titulo">
   <div class="inner">
     <h2 class="l-display title" id="cierre-titulo">Mándala a imprenta sabiendo cómo va.</h2>
     <div class="side">
-      <p class="text">
-        Abre Paginator con tus archivos o empieza por la revista de ejemplo: está cargada, impuesta y abierta en 3D.
-      </p>
-      <div class="l-actions">
-        <a class="l-action onPetrol onPetrol--primary" href="/app">
-          Abrir Paginator
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </a>
-        <a class="l-action onPetrol" href="/app?ejemplo=1">Ver la revista de ejemplo</a>
-      </div>
+      <p class="text">Se abre en tu navegador, sin instalar nada. Tus archivos no salen de tu equipo.</p>
+      <a class="l-action l-action--on-bar-primary action" href="/app">
+        Abrir Paginator
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </a>
     </div>
   </div>
   <footer class="colophon">
@@ -26,15 +23,17 @@ const year = new Date().getFullYear();
       <a href="/privacidad">Privacidad</a>
       <a href="/condiciones">Condiciones de uso</a>
     </nav>
+    <span class="theme"><ThemeToggle client:visible surface="bar" /></span>
   </footer>
 </section>
 
 <style>
   .closing {
-    margin-top: var(--l-section-gap);
+    position: relative;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
     background: var(--bar);
     color: var(--on-bar);
-    scroll-margin-top: var(--l-bar-h);
   }
 
   .inner {
@@ -42,7 +41,7 @@ const year = new Date().getFullYear();
     grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
     gap: var(--space-12);
     align-items: end;
-    padding: var(--space-16) var(--l-gutter) var(--space-16);
+    padding: 6rem var(--l-gutter);
   }
 
   .title {
@@ -51,50 +50,27 @@ const year = new Date().getFullYear();
 
   .side {
     display: grid;
+    justify-items: start;
     gap: var(--space-6);
     padding-bottom: var(--space-2);
   }
 
   .text {
-    max-width: 30rem;
+    max-width: 26rem;
     color: var(--on-bar-2);
     font-size: var(--text-18);
     line-height: 1.5;
   }
 
-  .onPetrol {
-    --a-bg: transparent;
-    --a-bg-hover: var(--bar-tab);
-    --a-bg-active: var(--bar-tab-hover);
-    --a-fg: var(--on-bar);
-    --a-border: var(--on-bar-3);
-    --a-border-hover: var(--on-bar-2);
-  }
-
-  .onPetrol--primary {
-    --a-bg: var(--on-bar);
-    --a-bg-hover: var(--on-bar-2);
-    --a-bg-active: var(--on-bar-3);
-    --a-fg: var(--bar);
-    --a-border: transparent;
-    --a-border-hover: transparent;
-
-    font-weight: var(--weight-semibold);
-  }
-
-  .onPetrol:focus-visible {
-    outline-color: var(--focus-on-bar);
-  }
-
   .colophon {
-    padding: var(--space-5) var(--l-gutter);
-    border-top: 1px solid var(--bar-rule);
-    color: var(--on-bar-2);
-    font-size: var(--text-13);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: var(--space-3) var(--space-6);
+    padding: var(--space-5) var(--l-gutter);
+    border-top: 1px solid var(--bar-rule);
+    color: var(--on-bar-2);
+    font-size: var(--text-13);
   }
 
   .legal {
@@ -103,6 +79,7 @@ const year = new Date().getFullYear();
   }
 
   .legal a {
+    border-radius: var(--radius-sm);
     color: var(--on-bar-2);
     text-decoration: underline;
     text-underline-offset: 0.15em;
@@ -115,7 +92,10 @@ const year = new Date().getFullYear();
   .legal a:focus-visible {
     outline: 2px solid var(--focus-on-bar);
     outline-offset: 2px;
-    border-radius: var(--radius-sm);
+  }
+
+  .theme {
+    display: none;
   }
 
   .brand {
@@ -124,21 +104,36 @@ const year = new Date().getFullYear();
     font-weight: var(--weight-heavy);
   }
 
+  @media (min-width: 64rem) and (min-height: 40rem) and (prefers-reduced-motion: no-preference) {
+    .closing {
+      min-height: calc(100svh - var(--l-bar-h));
+    }
+
+    .inner {
+      align-content: center;
+    }
+  }
+
   @media (max-width: 1023px) {
     .inner {
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-8);
-      padding-block: var(--space-12);
+      padding-block: var(--space-16);
     }
   }
 
   @media (max-width: 767px) {
-    .l-actions {
-      display: grid;
+    .inner {
+      padding-block: var(--space-12);
     }
 
-    .l-action {
+    .action {
       width: 100%;
+    }
+
+    .theme {
+      display: flex;
+      flex-basis: 100%;
     }
   }
 </style>

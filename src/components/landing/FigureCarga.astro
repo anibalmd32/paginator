@@ -1,0 +1,173 @@
+---
+import { pageThumb, playRange } from './steps';
+
+const GROUPS: ReadonlyArray<readonly [number | null, number]> = [
+  [null, 1],
+  [2, 3],
+  [4, 5],
+  [6, 7],
+  [8, 9],
+  [10, 11],
+];
+const PER_ROW = 3;
+const GAP = 0.2727;
+const ROW_PITCH = 1.45;
+const PAGE_TOTAL = 11;
+const pileX = (PER_ROW * 2 + (PER_ROW - 1) * GAP) / 2;
+const pileY = (ROW_PITCH + 1) / 2;
+const round = (value: number): number => Math.round(value * 1000) / 1000;
+
+function deal(page: number, group: number, side: number): string {
+  const column = group % PER_ROW;
+  const row = Math.floor(group / PER_ROW);
+  const x = column * (2 + GAP) + side + 0.5;
+  const y = row * ROW_PITCH + 0.5;
+  const jitterX = (((page * 53) % 11) - 5) / 20;
+  const jitterY = (((page * 29) % 9) - 4) / 30;
+  const rotation = ((page * 37) % 17) - 8;
+  return [
+    `--dx: ${String(round(pileX - x + jitterX))}`,
+    `--dy: ${String(round(pileY - y + jitterY))}`,
+    `--rot: ${String(rotation)}deg`,
+    `z-index: ${String(PAGE_TOTAL + 1 - page)}`,
+    '--play: carga-deal',
+    playRange(page - 1, PAGE_TOTAL, 0.4, 0.08, 0.8),
+  ].join('; ');
+}
+---
+
+<figure class="l-fig carga">
+  <figcaption class="visually-hidden">
+    Las once primeras páginas de la revista de ejemplo, ordenadas en orden de lectura: la portada sola y después los pliegos
+    2–3, 4–5, 6–7, 8–9 y 10–11, cada uno con una línea de corte por el lomo.
+  </figcaption>
+
+  <div class="grid" aria-hidden="true">
+    {
+      GROUPS.map(([left, right], group) => (
+        <div class="group">
+          <div class="pages">
+            {left === null ? (
+              <span class="blank" />
+            ) : (
+              <span class="page l-play" style={deal(left, group, 0)}>
+                <img src={pageThumb(left)} alt="" width="420" height="594" loading="lazy" decoding="async" />
+              </span>
+            )}
+            <span class="page l-play" style={deal(right, group, 1)}>
+              <img src={pageThumb(right)} alt="" width="420" height="594" loading="lazy" decoding="async" />
+            </span>
+            {left !== null && <span class="cut l-play" style={`--play: l-grow-y; ${playRange(group - 1, GROUPS.length - 1, 0.5, 0.66, 0.97)}`} />}
+          </div>
+          <p class="folios l-play" style={`--play: l-appear; ${playRange(group, GROUPS.length, 0.5, 0.5, 0.96)}`}>
+            <span>{left}</span>
+            <span>{right}</span>
+          </p>
+        </div>
+      ))
+    }
+  </div>
+
+  <p class="legend" aria-hidden="true">
+    <span class="legendCut"></span>
+    Corte por el lomo en los pliegos dobles
+  </p>
+</figure>
+
+<style>
+  .carga {
+    display: grid;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 37em;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 4.1667%;
+    row-gap: 1.25rem;
+  }
+
+  .group {
+    display: grid;
+    gap: 0.375rem;
+  }
+
+  .pages {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .page,
+  .blank {
+    position: relative;
+    aspect-ratio: 420 / 594;
+  }
+
+  .page {
+    background: var(--page-paper);
+    box-shadow: 0 0 0 1px var(--rule-strong);
+  }
+
+  .cut {
+    position: absolute;
+    top: -0.5rem;
+    bottom: -0.5rem;
+    left: 50%;
+    z-index: 20;
+    border-left: 2px dashed var(--guide-trim);
+    translate: -1px 0;
+    transform-origin: 50% 0;
+  }
+
+  .folios {
+    display: flex;
+    justify-content: space-between;
+    padding-inline: 1px;
+    font-size: var(--text-18);
+    font-stretch: var(--width-condensed);
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--weight-heavy);
+    letter-spacing: var(--tracking-dense);
+    line-height: 1;
+  }
+
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--ink-2);
+    font-size: var(--text-13);
+    line-height: 1.3;
+  }
+
+  .legendCut {
+    flex: none;
+    width: 0;
+    height: 1rem;
+    border-left: 2px dashed var(--guide-trim);
+  }
+
+  @keyframes carga-deal {
+    from {
+      translate: calc(var(--dx) * 100%) calc(var(--dy) * 100%);
+      rotate: var(--rot);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .carga {
+      gap: 1rem;
+    }
+
+    .grid {
+      row-gap: 0.75rem;
+    }
+
+    .folios {
+      font-size: var(--text-14);
+    }
+  }
+</style>

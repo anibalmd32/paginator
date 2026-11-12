@@ -1,42 +1,19 @@
 ---
 import { HeroMagazine } from './HeroMagazine';
-import { folioOf, SECTIONS } from './sections';
 ---
 
-<section class="hero" id="portada" data-canto-region="portada" aria-labelledby="titular">
+<section class="hero" aria-labelledby="titular">
   <div class="intro">
     <h1 id="titular" class="l-display"><span class="line">Cada página,</span> <span class="line">en su pliego.</span></h1>
     <p class="l-lede lede">
       Paginator calcula la imposición de tu revista, señala la página fuera de sitio y te deja hojear el ejemplar en
       3D antes de imprimir. Sin subir nada: todo ocurre en tu navegador.
     </p>
-    <div class="l-actions">
-      <a class="l-action l-action--primary" href="/app">
-        Abrir Paginator
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-      </a>
-      <a class="l-action" href="/app?ejemplo=1">Ver la revista de ejemplo</a>
-    </div>
+    <a class="l-action l-action--primary action" href="/app">
+      Abrir Paginator
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </a>
   </div>
-
-  <nav class="sumario" aria-labelledby="sumario-titulo">
-    <h2 id="sumario-titulo" class="sumarioTitle">Sumario</h2>
-    <ol class="entries">
-      {
-        SECTIONS.map((section) => (
-          <li>
-            <a class="entry" href={`#${section.id}`}>
-              <span class="l-folio folio">{folioOf(section.id)}</span>
-              <span class="entryText">
-                <span class="entryTitle">{section.title}</span>
-                <span class="entryDek">{section.summary}</span>
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ol>
-  </nav>
 
   <div class="stageCell">
     <HeroMagazine client:idle />
@@ -47,19 +24,15 @@ import { folioOf, SECTIONS } from './sections';
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
-    grid-template-rows: auto minmax(0, 1fr);
-    grid-template-areas:
-      'intro stage'
-      'sumario stage';
-    min-height: max(40rem, calc(100svh - var(--l-bar-h)));
+    min-height: max(36rem, calc(100svh - var(--l-bar-h)));
   }
 
   .intro {
-    grid-area: intro;
     display: grid;
-    align-content: start;
+    align-content: center;
+    justify-items: start;
     gap: var(--space-6);
-    padding: var(--space-12) var(--space-10) 0 var(--l-gutter);
+    padding: var(--space-12) var(--space-10) var(--space-16) var(--l-gutter);
   }
 
   .line {
@@ -70,97 +43,12 @@ import { folioOf, SECTIONS } from './sections';
     max-width: 32rem;
   }
 
-  .l-actions {
+  .action {
     margin-top: var(--space-2);
   }
 
-  .sumario {
-    grid-area: sumario;
-    align-self: end;
-    padding: var(--space-10) var(--space-10) var(--space-10) var(--l-gutter);
-  }
-
-  .sumarioTitle {
-    padding-bottom: var(--space-3);
-    border-bottom: 1px solid var(--ink);
-    font-size: var(--text-18);
-    font-stretch: var(--width-expanded);
-    font-weight: var(--weight-heavy);
-    letter-spacing: var(--tracking-title);
-    line-height: 1;
-  }
-
-  .entries > li + li {
-    border-top: 1px solid var(--rule);
-  }
-
-  .entry {
-    display: grid;
-    grid-template-columns: 3rem minmax(0, 1fr);
-    align-items: baseline;
-    column-gap: var(--space-3);
-    padding: 0.625rem var(--space-2) 0.625rem 0;
-    border-radius: var(--radius-sm);
-    color: var(--ink);
-    text-decoration: none;
-    transition: background-color var(--dur-fast) var(--ease-out);
-  }
-
-  .entry:hover {
-    background: var(--paper-hover);
-  }
-
-  .folio {
-    color: var(--petrol-ink);
-    font-size: var(--text-28);
-    text-align: end;
-  }
-
-  .entryText {
-    display: grid;
-    gap: 2px;
-  }
-
-  .entryTitle {
-    font-size: var(--text-16);
-    font-weight: var(--weight-semibold);
-    line-height: 1.25;
-  }
-
-  .entry:hover .entryTitle {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
-  }
-
-  .entryDek {
-    color: var(--ink-2);
-    font-size: var(--text-13);
-    line-height: 1.35;
-  }
-
   .stageCell {
-    grid-area: stage;
     min-height: 0;
-  }
-
-  @media (max-height: 820px) and (min-width: 768px) {
-    .intro {
-      padding-top: var(--space-8);
-      gap: var(--space-5);
-    }
-
-    .sumario {
-      padding-block: var(--space-6);
-    }
-
-    .entry {
-      padding-block: var(--space-2);
-    }
-
-    .entryDek {
-      display: none;
-    }
   }
 
   @media (max-width: 1439px) {
@@ -168,8 +56,7 @@ import { folioOf, SECTIONS } from './sections';
       grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
     }
 
-    .intro,
-    .sumario {
+    .intro {
       padding-inline-end: var(--space-8);
     }
   }
@@ -183,11 +70,6 @@ import { folioOf, SECTIONS } from './sections';
   @media (max-width: 1023px) {
     .hero {
       grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto auto auto;
-      grid-template-areas:
-        'intro'
-        'stage'
-        'sumario';
       min-height: 0;
     }
 
@@ -197,14 +79,6 @@ import { folioOf, SECTIONS } from './sections';
 
     .stageCell {
       height: min(36rem, 72svh);
-    }
-
-    .sumario {
-      padding: var(--space-10) var(--l-gutter) 0;
-    }
-
-    .entryDek {
-      display: block;
     }
   }
 
@@ -218,11 +92,7 @@ import { folioOf, SECTIONS } from './sections';
       height: calc(60.8vw + 12rem);
     }
 
-    .l-actions {
-      display: grid;
-    }
-
-    .l-action {
+    .action {
       width: 100%;
     }
   }

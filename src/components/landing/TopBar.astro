@@ -3,27 +3,123 @@ import { LandingAccount } from '@/components/account/LandingAccount';
 import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import { cloudMode } from '@/lib/cloud';
 
+import { STEPS } from './steps';
+
+interface Props {
+  steps?: boolean;
+}
+
+const { steps = false } = Astro.props;
 const accounts = cloudMode() !== 'disabled';
 ---
 
 <a class="skip" href="#contenido">Saltar al contenido</a>
 <header class="bar" data-landing-bar>
   <a class="brand" href="/" aria-label="Paginator, inicio">
-    <svg class="mark" viewBox="0 0 32 32" width="24" height="24" aria-hidden="true" focusable="false">
-      <rect class="markTile" width="32" height="32" rx="5" />
-      <rect class="markSheet" x="6" y="6.5" width="11" height="4" rx="0.75" />
-      <rect class="markSheet" x="6" y="11.5" width="15" height="4" rx="0.75" />
-      <rect class="markSheet" x="6" y="16.5" width="20" height="4" rx="0.75" />
-      <rect class="markCover" x="6" y="21.5" width="20" height="4" rx="0.75" />
+    <svg class="mark" viewBox="0 0 20 20" width="22" height="22" aria-hidden="true" focusable="false">
+      <rect class="markSheet" x="0" y="0.5" width="11" height="4" rx="0.75"></rect>
+      <rect class="markSheet" x="0" y="5.5" width="15" height="4" rx="0.75"></rect>
+      <rect class="markSheet" x="0" y="10.5" width="20" height="4" rx="0.75"></rect>
+      <rect class="markCover" x="0" y="15.5" width="20" height="4" rx="0.75"></rect>
     </svg>
     <span class="brandName">Paginator</span>
   </a>
+
+  {
+    steps && (
+      <nav class="steps" aria-label="Los cuatro pasos de Paginator" data-step-tabs>
+        <ol class="list">
+          {STEPS.map((step, index) => (
+            <li class="item" style={`--step-index: ${String(index)}`}>
+              <a class="tab" href={`#${step.id}`} data-step-tab={step.id}>
+                <span class="number" aria-hidden="true">
+                  {step.number}
+                </span>
+                <span class="label">
+                  <span class="visually-hidden">Paso {step.number}: </span>
+                  {step.name}
+                </span>
+                <svg class="check" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )
+  }
+
   <div class="tools">
-    <ThemeToggle client:idle surface="paper" />
+    <span class="theme"><ThemeToggle client:idle surface="bar" /></span>
     {accounts && <LandingAccount client:only="react" />}
-    <a class="l-action l-action--sm barAction" href="/app">Abrir Paginator</a>
+    <a class="l-action l-action--sm l-action--on-bar barAction" href="/app" aria-label="Abrir Paginator">
+      <span>Abrir<span class="barActionRest">&nbsp;Paginator</span></span>
+    </a>
   </div>
 </header>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-landing-bar]');
+  const tabs = [...document.querySelectorAll<HTMLAnchorElement>('[data-step-tab]')];
+  const marks = tabs.map((tab) => document.getElementById(tab.dataset['stepTab'] ?? ''));
+  const end = document.querySelector<HTMLElement>('[data-steps-end]');
+
+  if (bar && tabs.length > 0) {
+    const passed = new Map<Element, boolean>();
+    let current = -2;
+
+    const apply = (): void => {
+      let active = -1;
+      marks.forEach((mark, index) => {
+        if (mark && passed.get(mark)) active = index;
+      });
+      const finished = end ? passed.get(end) === true : false;
+      const next = finished ? tabs.length : active;
+      if (next === current) return;
+      current = next;
+      tabs.forEach((tab, index) => {
+        if (index === next) tab.setAttribute('aria-current', 'step');
+        else tab.removeAttribute('aria-current');
+        tab.toggleAttribute('data-done', index < next);
+      });
+      bar.toggleAttribute('data-past-hero', next >= 0);
+      bar.dataset['sheet'] = next >= 0 && next < tabs.length ? String(next + 1) : '';
+    };
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const targets = new Map<Element, Element>();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) passed.set(targets.get(entry.target) ?? entry.target, entry.isIntersecting);
+          apply();
+        },
+        { rootMargin: '1000000px 0px -100% 0px', threshold: 0 },
+      );
+      for (const mark of [...marks, end]) {
+        if (!mark) continue;
+        const sensor = mark.querySelector('[data-sensor]') ?? mark;
+        targets.set(sensor, mark);
+        observer.observe(sensor);
+      }
+    }
+
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', (event) => {
+        const mark = marks[index];
+        if (!mark || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        const dwell = document.querySelector<HTMLElement>(`[data-dwell="${mark.id}"]`);
+        const settle = dwell ? dwell.offsetHeight * 0.92 : 0;
+        const top = mark.getBoundingClientRect().top + window.scrollY - bar.offsetHeight + settle;
+        window.scrollTo({ top, behavior: calm.matches ? 'auto' : 'smooth' });
+        history.replaceState(null, '', `#${mark.id}`);
+        document.getElementById(`${mark.id}-titulo`)?.focus({ preventScroll: true });
+      });
+    });
+  }
+</script>
 
 <style>
   .skip {
@@ -45,34 +141,44 @@ const accounts = cloudMode() !== 'disabled';
   }
 
   .bar {
+    --tab-paper: var(--paper);
+
     position: sticky;
     top: 0;
     z-index: var(--z-header);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
+    gap: var(--space-6);
     height: var(--l-bar-h);
-    padding-inline: var(--l-gutter) calc(var(--l-canto-w) + var(--l-gutter));
-    border-bottom: 1px solid var(--rule);
-    background: var(--paper);
+    padding-inline: var(--l-gutter);
+    background: var(--bar);
+    color: var(--on-bar);
+  }
+
+  .bar[data-sheet='2'] {
+    --tab-paper: var(--paper-sunken);
+  }
+
+  .bar[data-sheet='4'] {
+    --tab-paper: var(--stage);
   }
 
   .brand {
     display: inline-flex;
+    flex: none;
     align-items: center;
     gap: var(--space-2);
     border-radius: var(--radius-sm);
-    color: var(--ink);
+    color: inherit;
     text-decoration: none;
+  }
+
+  .brand:focus-visible {
+    outline-color: var(--focus-on-bar);
   }
 
   .mark {
     flex: none;
-  }
-
-  .markTile {
-    fill: var(--bar);
   }
 
   .markSheet {
@@ -91,36 +197,173 @@ const accounts = cloudMode() !== 'disabled';
     line-height: 1;
   }
 
-  .tools {
+  .steps {
+    align-self: stretch;
     display: flex;
+    min-width: 0;
+  }
+
+  .list {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+  }
+
+  .item {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: calc(2.125rem + var(--step-index, 0) * 0.1875rem);
+    padding: 0 var(--space-4) 0 var(--space-3);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--bar-tab);
+    color: var(--on-bar);
+    font-size: var(--text-14);
+    font-weight: var(--weight-medium);
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .tab:hover {
+    background: var(--bar-tab-hover);
+    text-decoration: none;
+  }
+
+  .tab:focus-visible {
+    outline-color: var(--focus-on-bar);
+    outline-offset: -4px;
+  }
+
+  .number {
+    min-width: 0.75em;
+    font-size: var(--text-16);
+    font-stretch: var(--width-expanded);
+    font-weight: var(--weight-heavy);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  .check {
+    display: none;
+    flex: none;
+    color: var(--on-bar-2);
+  }
+
+  .tab[data-done] .check {
+    display: block;
+  }
+
+  .tab[aria-current] {
+    background: var(--tab-paper);
+    box-shadow: 0 1px 0 var(--tab-paper);
+    color: var(--ink);
+    font-weight: var(--weight-semibold);
+  }
+
+  .bar[data-sheet='4'] .tab[aria-current] {
+    color: var(--stage-ink);
+  }
+
+  .tab[aria-current] .number {
+    color: var(--petrol-ink);
+  }
+
+  .tab[aria-current]:focus-visible {
+    outline-color: var(--focus);
+  }
+
+  .tools {
+    --ink: var(--on-bar);
+    --ink-2: var(--on-bar-2);
+    --paper-hover: var(--bar-tab);
+    --paper-active: var(--bar-tab-hover);
+    --focus: var(--focus-on-bar);
+
+    display: flex;
+    flex: none;
     align-items: center;
     gap: var(--space-3);
+    margin-inline-start: auto;
+  }
+
+  .theme {
+    display: flex;
   }
 
   .bar[data-past-hero] .barAction {
-    --a-bg: var(--petrol);
-    --a-bg-hover: var(--petrol-hover);
-    --a-bg-active: var(--petrol-active);
-    --a-fg: var(--on-petrol);
+    --a-bg: var(--on-bar);
+    --a-bg-hover: var(--on-bar-2);
+    --a-bg-active: var(--on-bar-3);
+    --a-fg: var(--bar);
     --a-border: transparent;
     --a-border-hover: transparent;
 
     font-weight: var(--weight-semibold);
   }
 
+  @media (max-width: 1279px) {
+    .bar {
+      gap: var(--space-4);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .tab:not([aria-current]) {
+      padding: 0 var(--space-3);
+    }
+
+    .tab:not([aria-current]) .label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .tab[data-done] .check {
+      display: none;
+    }
+  }
+
   @media (max-width: 767px) {
     .bar {
-      padding-inline: var(--l-gutter);
+      gap: var(--space-3);
+    }
+
+    .brandName,
+    .barActionRest,
+    .theme {
+      display: none;
     }
 
     .tools {
       gap: var(--space-2);
     }
+
+    .tab {
+      padding: 0 0.625rem;
+    }
   }
 
   @media (max-width: 439px) {
-    .brandName {
-      display: none;
+    .tab[aria-current] .label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
   }
 </style>

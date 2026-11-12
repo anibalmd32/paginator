@@ -1,0 +1,192 @@
+---
+import type { LandingStep } from './steps';
+
+interface Props {
+  step: LandingStep;
+  tone?: 'paper' | 'sunken' | 'stage';
+}
+
+const { step, tone = 'paper' } = Astro.props;
+const timeline = `--paso-${String(step.number)}`;
+---
+
+<span class="mark" id={step.id}><span class="sensor" data-sensor></span></span>
+<section class="sheet" data-tone={tone} aria-labelledby={`${step.id}-titulo`} style={`--tl: ${timeline}`}>
+  <div class="text">
+    <h2 class="l-title head" id={`${step.id}-titulo`} tabindex="-1">
+      <span class="num" aria-hidden="true">{step.number}</span>
+      <span class="visually-hidden">Paso {step.number}:</span>
+      <span>{step.name}</span>
+    </h2>
+    <p class="statement">{step.statement}</p>
+    <p class="body">{step.body}</p>
+  </div>
+  <div class="figcol">
+    <slot />
+  </div>
+</section>
+<div class="dwell" data-dwell={step.id} style={`--tl: ${timeline}`} aria-hidden="true"><span class="track"></span></div>
+
+<style>
+  .mark {
+    position: relative;
+    display: block;
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+  }
+
+  .sensor {
+    position: absolute;
+    top: calc(-2px - var(--l-bar-h));
+    left: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  .sheet {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: var(--space-10);
+    padding: var(--space-12) var(--l-gutter) var(--space-16);
+    border-top: 1px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .sheet[data-tone='sunken'] {
+    background: var(--paper-sunken);
+  }
+
+  .sheet[data-tone='stage'] {
+    background: var(--stage);
+    color: var(--stage-ink);
+  }
+
+  .text {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    max-width: 30rem;
+  }
+
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+  }
+
+  .head:focus {
+    outline: none;
+  }
+
+  .num {
+    color: var(--petrol-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .statement {
+    margin-top: var(--space-6);
+    font-size: var(--l-statement);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-title);
+    line-height: 1.16;
+    text-wrap: balance;
+  }
+
+  .body {
+    margin-top: var(--space-4);
+    color: var(--ink-2);
+    font-size: var(--text-18);
+    line-height: 1.5;
+  }
+
+  .sheet[data-tone='stage'] .body {
+    color: var(--stage-ink-2);
+  }
+
+  .figcol {
+    display: grid;
+    justify-items: center;
+    min-width: 0;
+  }
+
+  .dwell {
+    position: relative;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .track {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .sheet {
+      gap: var(--space-8);
+      padding-block: var(--space-10) var(--space-12);
+    }
+
+    .body {
+      font-size: var(--text-16);
+      line-height: 1.55;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .sheet {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: center;
+      align-content: center;
+      column-gap: var(--space-12);
+      padding-block: var(--space-16);
+    }
+
+    .text {
+      min-height: 15rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .figcol {
+        view-timeline-name: var(--tl);
+        view-timeline-axis: block;
+        view-timeline-inset: 0px 14%;
+      }
+    }
+  }
+
+  @media (min-width: 64rem) and (min-height: 40rem) and (prefers-reduced-motion: no-preference) {
+    .sheet {
+      position: sticky;
+      top: var(--l-bar-h);
+      height: calc(100svh - var(--l-bar-h));
+      padding-block: var(--space-8);
+      overflow: clip;
+    }
+
+    @supports (animation-timeline: view()) {
+      .figcol {
+        view-timeline-name: none;
+      }
+
+      .dwell {
+        height: 60svh;
+      }
+
+      .track {
+        position: absolute;
+        top: -12svh;
+        left: 0;
+        display: block;
+        width: 1px;
+        height: 66svh;
+        view-timeline-name: var(--tl);
+        view-timeline-axis: block;
+      }
+    }
+  }
+</style>

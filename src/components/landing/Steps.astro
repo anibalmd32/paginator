@@ -1,0 +1,52 @@
+---
+import Closing from './Closing.astro';
+import FigureCarga from './FigureCarga.astro';
+import FigureConfiguracion from './FigureConfiguracion.astro';
+import FigurePliegos from './FigurePliegos.astro';
+import FigureVisor from './FigureVisor.astro';
+import StepSheet from './StepSheet.astro';
+import { STEPS } from './steps';
+
+const [configuracion, carga, pliegos, visor] = STEPS;
+if (!configuracion || !carga || !pliegos || !visor) throw new Error('La landing necesita los cuatro pasos.');
+---
+
+<div class="steps">
+  <StepSheet step={configuracion}>
+    <FigureConfiguracion />
+  </StepSheet>
+  <StepSheet step={carga} tone="sunken">
+    <FigureCarga />
+  </StepSheet>
+  <StepSheet step={pliegos}>
+    <FigurePliegos />
+  </StepSheet>
+  <StepSheet step={visor} tone="stage">
+    <FigureVisor />
+  </StepSheet>
+  <span class="end" data-steps-end><span class="sensor" data-sensor></span></span>
+  <Closing />
+</div>
+
+<style>
+  .steps {
+    position: relative;
+    timeline-scope: --paso-1, --paso-2, --paso-3, --paso-4;
+  }
+
+  .end {
+    position: relative;
+    display: block;
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+  }
+
+  .sensor {
+    position: absolute;
+    top: calc(-4px - var(--l-bar-h));
+    left: 0;
+    width: 1px;
+    height: 1px;
+  }
+</style>

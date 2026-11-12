@@ -1,0 +1,304 @@
+---
+import { CANTO_IMPOSITION, CANTO_LEAVES, CANTO_PAGE_COUNT, CANTO_SPINE, playRange } from './steps';
+
+const sheets = CANTO_IMPOSITION.sheets;
+const leaves = CANTO_LEAVES.slices;
+const total = CANTO_LEAVES.totalWeight;
+const range = (sheetIndex: number, lag = 0): string => playRange(sheetIndex, sheets.length, 0.32, 0.1 + lag, 0.86 + lag);
+---
+
+<figure class="l-fig maqueta">
+  <figcaption class="visually-hidden">
+    Maqueta de la revista de ejemplo: {CANTO_PAGE_COUNT} páginas grapadas a caballo dan {sheets.length} pliegos y un lomo de {CANTO_SPINE} mm.
+    {sheets.map((sheet) => `Pliego ${String(sheet.number)}: cara ${String(sheet.front.left)} y ${String(sheet.front.right)}, retiro ${String(sheet.back.left)} y ${String(sheet.back.right)}. `)}
+  </figcaption>
+
+  <div class="inner" aria-hidden="true">
+    <dl class="readouts">
+      <div class="readout">
+        <dt>páginas</dt>
+        <dd>{CANTO_PAGE_COUNT}</dd>
+      </div>
+      <div class="readout">
+        <dt>pliegos</dt>
+        <dd>{sheets.length}</dd>
+      </div>
+      <div class="readout">
+        <dt>lomo</dt>
+        <dd>{CANTO_SPINE} <span class="unit">mm</span></dd>
+      </div>
+      <div class="readout readout--text">
+        <dt>encuadernación</dt>
+        <dd>Grapada a caballo</dd>
+      </div>
+    </dl>
+
+    <div class="cantoRow">
+      <p class="rowLabel">
+        <span class="rowTitle">Canto</span>
+        <span class="rowData">{leaves.length} hojas</span>
+      </p>
+      <div class="canto" style={`--total: ${String(total)}`}>
+        {
+          leaves.map((leaf) => (
+            <span
+              class="leaf l-play"
+              data-cover={leaf.isCover ? '' : undefined}
+              style={`--w: ${String(leaf.weight)}; --rise: ${String(leaf.rise)}; --fill: ${leaf.fill}; --play: l-grow-y; ${range(leaf.sheetIndex)}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="sheets">
+      <p class="faceLabel faceLabel--front">cara</p>
+      <p class="faceLabel faceLabel--back">retiro</p>
+      {
+        sheets.map((sheet) => (
+          <div class="sheet l-play" style={`grid-column: ${String(sheet.index + 2)}; ${range(sheet.index, 0.08)}`}>
+            <span class="chip" data-cover={sheet.role === 'cover' ? '' : undefined}>
+              {sheet.number}
+            </span>
+            <span class="pair">
+              <span class="page">{sheet.front.left}</span>
+              <span class="page page--right">{sheet.front.right}</span>
+            </span>
+            <span class="pair">
+              <span class="page">{sheet.back.left}</span>
+              <span class="page page--right">{sheet.back.right}</span>
+            </span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</figure>
+
+<style>
+  .maqueta {
+    width: 100%;
+    max-width: 37em;
+  }
+
+  .inner {
+    display: grid;
+    gap: 2em;
+  }
+
+  .readouts {
+    display: grid;
+    grid-template-columns: repeat(3, auto) minmax(0, 1fr);
+    border-block: 1px solid var(--rule-strong);
+  }
+
+  .readout {
+    display: grid;
+    align-content: center;
+    gap: 2px;
+    padding: 0.8em 1.6em 0.8em 0;
+  }
+
+  .readout + .readout {
+    padding-inline-start: 1.2em;
+    border-inline-start: 1px solid var(--rule);
+  }
+
+  .readout dt {
+    order: 2;
+    color: var(--ink-2);
+    font-size: var(--text-13);
+    line-height: 1.2;
+  }
+
+  .readout dd {
+    margin: 0;
+    font-size: var(--text-28);
+    font-stretch: var(--width-condensed);
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--weight-heavy);
+    letter-spacing: var(--tracking-dense);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .readout--text dd {
+    font-size: var(--text-18);
+    font-stretch: var(--width-normal);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-title);
+    line-height: 1.75rem;
+  }
+
+  .unit {
+    color: var(--ink-2);
+    font-size: var(--text-13);
+    font-stretch: var(--width-normal);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0;
+  }
+
+  .cantoRow,
+  .sheets {
+    display: grid;
+    grid-template-columns: 4em repeat(6, minmax(0, 1fr));
+    column-gap: 0.75em;
+  }
+
+  .cantoRow {
+    align-items: end;
+  }
+
+  .rowLabel {
+    display: grid;
+    gap: 2px;
+    line-height: 1.15;
+  }
+
+  .rowTitle {
+    font-size: var(--text-14);
+    font-weight: var(--weight-semibold);
+  }
+
+  .rowData {
+    color: var(--ink-2);
+    font-size: var(--text-12);
+    font-stretch: var(--width-condensed);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-dense);
+  }
+
+  .canto {
+    grid-column: 2 / -1;
+    display: flex;
+    align-items: flex-end;
+    height: 5.6em;
+  }
+
+  .leaf {
+    --edge: color-mix(in oklch, var(--fill) 72%, var(--ink));
+
+    flex: var(--w) 1 0;
+    height: calc(4.4em + var(--rise) * 1.2em);
+    background: var(--fill);
+    box-shadow: inset -1px 0 0 var(--edge);
+    transform-origin: 50% 100%;
+  }
+
+  .leaf:last-child {
+    box-shadow: none;
+  }
+
+  .sheets {
+    grid-template-rows: auto auto auto;
+    row-gap: 0.5em;
+    align-items: center;
+  }
+
+  .faceLabel {
+    grid-column: 1;
+    color: var(--ink-2);
+    font-size: var(--text-12);
+    line-height: 1;
+    text-align: end;
+  }
+
+  .faceLabel--front {
+    grid-row: 2;
+  }
+
+  .faceLabel--back {
+    grid-row: 3;
+  }
+
+  .sheet {
+    grid-row: 1 / 4;
+    display: grid;
+    grid-template-rows: subgrid;
+    justify-items: start;
+  }
+
+  .chip {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.5rem;
+    height: 1.25rem;
+    padding-inline: 0.375rem;
+    border-radius: var(--radius-sm);
+    background: var(--stock-neutral);
+    color: var(--on-stock-neutral);
+    font-size: var(--text-13);
+    font-stretch: var(--width-expanded);
+    font-weight: var(--weight-heavy);
+    line-height: 1;
+  }
+
+  .chip[data-cover] {
+    background: var(--stock-cover);
+    color: var(--on-stock-cover);
+  }
+
+  .pair {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    aspect-ratio: 2 / 1.414;
+    border: 1px solid var(--rule-strong);
+    border-radius: 2px;
+    background: var(--paper-raised);
+  }
+
+  .pair::after {
+    content: '';
+    position: absolute;
+    top: -0.3em;
+    bottom: -0.3em;
+    left: 50%;
+    border-left: 1px dashed var(--ink-3);
+  }
+
+  .page {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 0.3em 0.2em;
+    font-size: var(--text-14);
+    font-stretch: var(--width-condensed);
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--weight-heavy);
+    line-height: 1;
+  }
+
+  .page--right {
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 767px) {
+    .inner {
+      gap: 1.75rem;
+    }
+
+    .readouts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .readout--text {
+      display: none;
+    }
+
+    .readout dd {
+      font-size: var(--text-22);
+    }
+
+    .cantoRow,
+    .sheets {
+      grid-template-columns: 2.5rem repeat(6, minmax(0, 1fr));
+      column-gap: 0.375rem;
+    }
+
+    .page {
+      padding: 0 2px 2px;
+      font-size: var(--text-12);
+    }
+  }
+</style>
