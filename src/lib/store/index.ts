@@ -4,7 +4,8 @@ export { computeDerived, PREVIEW_PAGE_COUNT, selectDerived, worseSeverity } from
 export type { Derived, IssueCounts } from './derived';
 export { pageRegion, pageTextureProvider, pageThumbnailUrl, rasterizePage, regionKey } from './pageMedia';
 export type { PageBox, PageRegion } from './pageMedia';
-export { buildCurrentReport, downloadCurrentReport, downloadText, slugify } from './report';
+export { buildCurrentReport, downloadBlob, downloadCurrentReport, downloadText, slugify } from './report';
+export { downloadPrintPdf } from './printExport';
 export type { ReportFormat } from './report';
 export { currentSnapshot, fingerprintProgress } from './cloud';
 export type { FingerprintProgress } from './cloud';
